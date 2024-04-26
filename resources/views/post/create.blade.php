@@ -7,6 +7,7 @@
     {{-- <form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data"> --}}
     <form action="#" method="POST" enctype="multipart/form-data">
         @csrf
+
         {{-- Image preview --}}
         {{-- 
             Puts image in a session variable to be used in the preview.
@@ -25,7 +26,10 @@
     </form>
 
 
-    {{-- Move into separate file later --}}
+    {{-- 
+        Move into separate file later.
+        Can later be used inside the profile image update method as well.
+    --}}
     <script>
         function previewFile() {
             const preview = document.querySelector('#preview');
