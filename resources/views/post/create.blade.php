@@ -8,7 +8,11 @@
     <form action="#" method="POST" enctype="multipart/form-data">
         @csrf
         {{-- Image preview --}}
-        <img id="preview" src="{{ asset('images/' . session('image')) }}" alt="Image preview" />
+        {{-- 
+            Puts image in a session variable to be used in the preview.
+            This has to also have a function for mobile devices to both take a picture and upload it from the device.
+        --}}
+        <img id="preview" src="{{ asset(session('image')) }}" alt="Image preview" />
         <label for="file">Import image</label>
         <input id="file" type="file" name="file" hidden accept="image/*" capture="camera"
             onchange="previewFile()" />
