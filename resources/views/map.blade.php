@@ -1,4 +1,4 @@
-@include('layouts.app')
+@extends('layouts.app')
 @section('title', 'Map')
 @section('content')
     <h1>Map</h1>

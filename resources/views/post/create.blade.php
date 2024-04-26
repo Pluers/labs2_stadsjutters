@@ -1,4 +1,4 @@
-@include('layouts.app')
+@extends('layouts.app')
 @section('title', 'Create Post')
 @section('content')
     <h1>Create Post</h1>

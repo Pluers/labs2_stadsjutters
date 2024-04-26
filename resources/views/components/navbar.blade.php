@@ -1,4 +1,4 @@
-<a href="/home">
+<a href="{{ route('home') }}">
     <span class="material-symbols-rounded">
         home
     </span>
