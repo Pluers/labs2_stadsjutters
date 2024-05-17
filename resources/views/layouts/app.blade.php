@@ -16,10 +16,10 @@
         @include('components.header')
     </header>
     <main>
-        @yield('content')
+        <router-view></router-view>
     </main>
     <nav>
-        @include('components.navbar')
+        <navbar></navbar>
     </nav>
 </body>
 
