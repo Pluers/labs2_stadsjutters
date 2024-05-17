@@ -2,17 +2,17 @@
     <span class="material-symbols-rounded">
         home
     </span>
-    Home
+    <p>Home</p>
 </a>
 <a href="/map">
     <span class="material-symbols-rounded">
         map
     </span>
-    Map
+    <p>Map</p>
 </a>
 <a href="/profile">
     <span class="material-symbols-rounded">
         person
     </span>
-    Profile
+    <p>Profile</p>
 </a>
