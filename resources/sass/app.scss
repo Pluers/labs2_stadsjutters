@@ -56,6 +56,10 @@ nav {
         gap: 0.5rem;
         z-index: 2;
         width: 20%;
+        .selected {
+            transition: all 0.2s ease;
+            color: $secondary;
+        }
         p,
         span {
             margin: 0 1rem;
@@ -74,7 +78,16 @@ body a span.material-symbols-rounded {
     position: absolute;
     height: 50%;
     width: 25%; /* Adjust this based on the size of your navbar links. */
-    background-color: #ccc; /* Adjust this based on your design. */
+    background-color: $primary; /* Adjust this based on your design. */
     border-radius: 50px; /* This makes the overlay pill-shaped. Adjust as needed. */
     transition: all 0.3s ease; /* This animates the movement of the overlay. Adjust as needed. */
+}
+.slide-enter-active,
+.slide-leave-active {
+    transition: all 0.5s ease-in-out;
+}
+.slide-enter,
+.slide-leave-to {
+    transform: translateX(-10px);
+    opacity: 0;
 }
