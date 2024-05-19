@@ -11,7 +11,7 @@
 
 body {
     height: 100vh;
-    width: 100vw;
+    max-width: $body-width;
     display: grid;
     grid-auto-rows: auto max-content auto;
     margin: 0;
@@ -38,7 +38,29 @@ header {
 main {
     display: flex;
     height: $main-height;
-    margin: 0 1rem;
+    margin: 0;
+    width: $main-width;
+}
+button {
+    display: flex;
+    height: 3rem;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+    &.primary {
+        background-color: $primary;
+        color: $secondary;
+    }
+    &.secondary {
+        background-color: $secondary;
+        color: $primary;
+    }
+    &.accent {
+        background-color: $accent;
+        color: $secondary;
+    }
 }
 nav {
     height: $nav-height;
@@ -66,6 +88,53 @@ nav {
             text-align: center;
             color: $primary;
             font-weight: bold;
+        }
+    }
+}
+#home {
+    display: grid;
+    grid-template-rows: 1fr 2fr 9fr;
+    width: $main-width;
+    margin: 1rem;
+    gap: 1rem;
+    #filterElement {
+        border-radius: $border-radius;
+        display: grid;
+        grid-template-rows: auto auto;
+        background-color: $primary;
+        .search {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            width: 100%;
+            .searchBar {
+                padding: 0.5rem 1rem;
+                border: none;
+                border-radius: $border-radius;
+                font-size: 16px;
+                color: $secondary;
+                background-color: $secondary;
+            }
+            & a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                padding: 0.8rem;
+                span {
+                    color: $secondary;
+                }
+            }
+        }
+        .filters {
+            display: flex;
+            justify-content: space-around;
+            gap: 1rem;
+            padding: 0.2rem;
+            align-items: center;
+            color: $secondary;
+            button {
+                width: 100%;
+            }
         }
     }
 }

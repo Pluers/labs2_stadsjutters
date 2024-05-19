@@ -17,6 +17,11 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // Display Configuration
+$body-width: 100vw;
 $nav-height: 6rem;
 $nav-img-height: 4rem;
 $main-height: calc(100vh - ($nav-height * 2));
+$main-width: 100vw;
+$element-padding: 1rem;
+$element-margin: 1rem;
+$border-radius: 12px;
