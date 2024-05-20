@@ -1,7 +1,10 @@
 <template>
     <div id="profile">
         <section>
-            <p v-if="user">Welcome to your profile page, {{ user.name }}!</p>
+            <p v-if="user">{{ user.name }}</p>
+            <p v-if="user">{{ user.role }}</p>
+            <hr>
+            <!-- All posts from user -->
 
         </section>
         <button class="secondary" v-on:click="logout">Logout</button>
