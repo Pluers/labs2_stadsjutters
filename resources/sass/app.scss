@@ -95,6 +95,16 @@ nav {
         }
     }
 }
+.overlay {
+    z-index: -1;
+    top: 10%;
+    position: absolute;
+    height: 50%;
+    width: 25%; /* Adjust this based on the size of your navbar links. */
+    background-color: $primary; /* Adjust this based on your design. */
+    border-radius: 50px; /* This makes the overlay pill-shaped. Adjust as needed. */
+    transition: all 0.3s ease; /* This animates the movement of the overlay. Adjust as needed. */
+}
 #home {
     display: grid;
     grid-template-rows: 1fr 2fr 9fr;
@@ -179,19 +189,20 @@ nav {
         }
     }
 }
+#profile {
+    display: grid;
+    grid-template-rows: 1fr 2fr 9fr;
+    width: $main-width;
+    margin: $page-margin;
+    gap: 1rem;
+    button {
+        padding: 0 1rem;
+    }
+}
 body a span.material-symbols-rounded {
     font-size: 32px;
 }
-.overlay {
-    z-index: -1;
-    top: 10%;
-    position: absolute;
-    height: 50%;
-    width: 25%; /* Adjust this based on the size of your navbar links. */
-    background-color: $primary; /* Adjust this based on your design. */
-    border-radius: 50px; /* This makes the overlay pill-shaped. Adjust as needed. */
-    transition: all 0.3s ease; /* This animates the movement of the overlay. Adjust as needed. */
-}
+
 // Slide animation of the navbar
 .slide-enter-active,
 .slide-leave-active {

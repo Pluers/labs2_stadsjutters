@@ -1,7 +1,12 @@
 <template>
-    <h1>Profile</h1>
-    <p v-if="user">Welcome to your profile page, {{ user.name }}!</p>
-    <button v-on:click="logout">Logout</button>
+    <div id="profile">
+        <section>
+            <p v-if="user">Welcome to your profile page, {{ user.name }}!</p>
+
+        </section>
+        <button class="secondary" v-on:click="logout">Logout</button>
+    </div>
+
 </template>
 
 <script>
