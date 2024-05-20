@@ -18,6 +18,7 @@ Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// General auth routes
 Auth::routes();
 
 // Catch-all route
