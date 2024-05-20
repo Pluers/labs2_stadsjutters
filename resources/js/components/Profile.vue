@@ -14,13 +14,9 @@ export default {
 
         const getUser = async () => {
             try {
-                const response = await axios.get('/api/user', {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    }
-                });
+                const response = await axios.get('/user');
                 user.value = response.data;
-                console.log(localStorage.getItem('token'));
+                console.log('User:', user.value);
             } catch (error) {
                 console.error('Failed to get user:', error);
             }
