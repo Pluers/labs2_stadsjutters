@@ -27,26 +27,53 @@
                 </div>
             </div>
         </div>
-        <div class="posts">
-            <div class="post">
-                <div class="post-header">
-                    <div class="post-title">
-                        <!-- Post title -->
-                        Post titel
-                    </div>
-                    <div class="post-date">
-                        <!-- Post date -->
-                        Post datum
+        <div id="categories">
+            <div class="category">
+                <h3>New Posts</h3>
+                <div class="new-posts">
+                    <div class="post" v-for="i in 3" :key="i">
+                        <img src="" alt="">
+                        <div class="post-header">
+                            <div class="post-title">
+                                <!-- Post title -->
+                                Post titel
+                            </div>
+                            <div class="post-date">
+                                <!-- Post date -->
+                                Post datum
+                            </div>
+                            <div class="post-content">
+                                <!-- Post content -->
+                                Post inhoud
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="post-content">
-                    <!-- Post content -->
-                    Post inhoud
+            </div>
+            <div class="category">
+                <h3>Nearby</h3>
+                <div class="new-posts">
+                    <div class="post" v-for="i in 3" :key="i">
+                        <img src="" alt="">
+                        <div class="post-header">
+                            <div class="post-title">
+                                <!-- Post title -->
+                                Post titel
+                            </div>
+                            <div class="post-date">
+                                <!-- Post date -->
+                                Post datum
+                            </div>
+                            <div class="post-content">
+                                <!-- Post content -->
+                                Post inhoud
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
