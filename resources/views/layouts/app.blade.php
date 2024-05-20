@@ -12,15 +12,21 @@
 </head>
 
 <body>
-    <header>
-        @include('components.header')
-    </header>
-    <main>
-        <router-view></router-view>
-    </main>
-    <nav>
-        <navbar></navbar>
-    </nav>
+    @if (auth()->check())
+        <header>
+            @include('components.header')
+        </header>
+        <main>
+            <router-view></router-view>
+        </main>
+        <nav>
+            <navbar></navbar>
+        </nav>
+    @else
+        <main>
+            @yield('content')
+        </main>
+    @endif
 </body>
 
 </html>
