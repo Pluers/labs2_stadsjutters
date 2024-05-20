@@ -3,11 +3,12 @@
         <section>
             <p v-if="user">{{ user.name }}</p>
             <p v-if="user">{{ user.role }}</p>
+
+            <button class="secondary" v-on:click="this.$router.push('/edit-profile')">Edit Profile</button>
             <hr>
             <!-- All posts from user -->
-
         </section>
-        <button class="secondary" v-on:click="logout">Logout</button>
+        <button class="secondary" v-on:click="logout">Logout</button><!--Should be moved to settings later-->
     </div>
 
 </template>
@@ -18,20 +19,24 @@ import axios from 'axios';
 
 export default {
     setup() {
+        // reactive reference to user
         const user = ref(null);
 
+        // Get user information
         const getUser = async () => {
             try {
+                // try a request to the server to get the user information only when the user is logged in and validated
                 const response = await axios.get('/user');
                 user.value = response.data;
-                console.log('User:', user.value);
             } catch (error) {
                 console.error('Failed to get user:', error);
             }
         };
 
+        // Call the getUser function when the component is mounted
         onMounted(getUser);
 
+        // Log out the user by redirecting to the logout page where the logout function takes care of the rest
         const logout = async () => {
             try {
                 await axios.post('/logout');
@@ -41,6 +46,7 @@ export default {
             }
         };
 
+        // return the user and logout function to be used in the template
         return {
             user,
             logout,

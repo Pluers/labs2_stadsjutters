@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 // PostController
 Route::get('/post', [PostController::class, 'index']);
@@ -14,8 +16,27 @@ Route::get('/post/create', [PostController::class, 'create']);
 Route::get('/post/update', [PostController::class, 'update']);
 
 // Set the logged in user information in an url to retrieve in vue components
-Route::middleware('auth')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::put('/edit-profile', function (Request $request) {
+        // Get the current user
+        $user = Auth::user();
+
+        // Update the user's properties with the request data
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        // Update more properties as needed
+
+        // Save the user back to the database
+        if ($user instanceof User) {
+            $user->save();
+        }
+
+        // Return the updated user as a JSON response
+        return $user;
+    });
 });
 
 // General auth routes
