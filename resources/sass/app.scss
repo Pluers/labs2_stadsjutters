@@ -72,6 +72,12 @@ nav {
 body a span.material-symbols-rounded {
     font-size: 32px;
 }
+iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0 -1rem;
+}
 .overlay {
     z-index: -1;
     top: 10%;
