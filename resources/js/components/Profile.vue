@@ -1,7 +1,8 @@
 <template>
     <div id="profile">
         <section>
-            <p v-if="user">{{ user.name }}</p>
+            <img src="{{ user.picture }}" alt="">
+            <h2 v-if="user">{{ user.name }}</h2>
             <p v-if="user">{{ user.role }}</p>
 
             <button class="secondary" v-on:click="this.$router.push('/edit-profile')">Edit Profile</button>

@@ -195,6 +195,14 @@ nav {
     width: $main-width;
     margin: $page-margin;
     gap: 1rem;
+    section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        hr {
+            width: 100%;
+        }
+    }
     button {
         padding: 0 1rem;
     }
