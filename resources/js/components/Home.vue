@@ -1,6 +1,6 @@
 <template>
     <div id="home">
-        <button class="accent">
+        <button class="accent" v-on:click="this.$router.push('/post/new')">
             <!-- New post -->
             Nieuwe Post
         </button>
