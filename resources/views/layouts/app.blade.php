@@ -1,13 +1,15 @@
 {{-- Main page where content resides that every page loads in --}}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=swap" />
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
+    <link rel="preload" fetchpriority="high" as="image"
+        href="{{ asset('logo-met-witte-achtergrond-stadsjutters-1.webp') }}" type="image/png">
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>

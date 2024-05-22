@@ -61,7 +61,7 @@ button {
     }
     &.accent {
         background-color: $accent;
-        color: $secondary;
+        color: $background;
     }
 }
 nav {
@@ -188,6 +188,16 @@ nav {
             }
         }
     }
+}
+
+#map,
+#profile,
+#settings,
+#notifications {
+    display: grid;
+    width: $main-width;
+    margin: $page-margin;
+    gap: 1rem;
 }
 #profile {
     display: grid;

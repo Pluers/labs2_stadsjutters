@@ -1,6 +1,8 @@
 <template>
-    <h1>Notifications</h1>
-    <p>Welcome to the notifications page!</p>
+    <div id="notifications">
+        <h1>Notifications</h1>
+        <p>Welcome to the notifications page!</p>
+    </div>
 </template>
 
 <script>

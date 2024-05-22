@@ -1,6 +1,12 @@
 <template>
-    <h1>Settings</h1>
-    <p>Welcome to the settings page!</p>
+    <div id="settings">
+        <section>
+            <h2>Account</h2>
+            <p>Delete account</p>
+            <p>Log out</p>
+        </section>
+    </div>
+
 </template>
 
 <script>
