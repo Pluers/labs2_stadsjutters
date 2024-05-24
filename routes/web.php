@@ -9,17 +9,15 @@ use Illuminate\Http\Request;
 use App\Models\User;
 
 // PostController
-Route::get('/post', [PostController::class, 'index']);
-Route::get('/post/show', [PostController::class, 'show']);
+Route::get('/post', [PostController::class, 'getPost']);
 Route::post('/post/store', [PostController::class, 'store']);
-Route::get('/post/create', [PostController::class, 'create']);
+Route::get('/post/new', [PostController::class, 'create']);
 Route::get('/post/update', [PostController::class, 'update']);
+
 
 // Set the logged in user information in an url to retrieve in vue components
 Route::middleware('auth')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/user', [UserController::class, 'getUser']);
     Route::put('/edit-profile', function (Request $request) {
         // Get the current user
         $user = Auth::user();

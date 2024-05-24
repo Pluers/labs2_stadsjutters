@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index()
+    public function getPost(Request $request)
     {
-        return view('index');
+        $id = $request->query('id');
+
+        // Fetch the post by its ID and return it as JSON
+        $post = Post::find($id);
+
+        return response()->json($post);
     }
+
     public function create()
     {
         return view('post.create');
@@ -21,11 +28,10 @@ class PostController extends Controller
             'body' => 'required',
         ]);
 
-        //// Post should be used for the model Post later
-        // $post = new Post;
-        // $post->title = $request->title;
-        // $post->body = $request->body;
-        // $post->save();
+        $post = new Post;
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->save();
         return redirect('/post');
     }
     public function show($id)

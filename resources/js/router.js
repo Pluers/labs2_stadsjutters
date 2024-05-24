@@ -6,6 +6,7 @@ import Settings from './components/Settings.vue';
 import Notifications from './components/Notifications.vue';
 import NotFound from './components/NotFound.vue';
 import EditUser from './components/EditUser.vue';
+import ShowPost from './components/posts/ShowPost.vue';
 import CreatePost from './components/posts/CreatePost.vue';
 
 const routes = [
@@ -17,6 +18,7 @@ const routes = [
     { path: '/notifications', component: Notifications, meta: { title: 'Notifications' } },
     { path: '/edit-profile', component: EditUser, meta: { title: 'Edit User' } },
     { path: '/post/new', component: CreatePost, meta: { title: 'Create Post' } },
+    { path: '/post/:postid', component: ShowPost, meta: { title: ':postname' } },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
 ];
 

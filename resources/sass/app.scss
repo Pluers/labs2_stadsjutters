@@ -193,8 +193,8 @@ nav {
 #map,
 #profile,
 #settings,
-#notifications {
-    display: grid;
+#notifications,
+#notFound {
     width: $main-width;
     margin: $page-margin;
     gap: 1rem;
