@@ -15,6 +15,8 @@ Route::get('/post/new', [PostController::class, 'create']);
 Route::get('/post/update', [PostController::class, 'update']);
 
 
+
+
 // Set the logged in user information in an url to retrieve in vue components
 Route::middleware('auth')->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
