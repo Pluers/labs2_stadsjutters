@@ -5,9 +5,12 @@ import Profile from './components/Profile.vue';
 import Settings from './components/Settings.vue';
 import Notifications from './components/Notifications.vue';
 import NotFound from './components/NotFound.vue';
+
 import EditUser from './components/EditUser.vue';
+
 import ShowPost from './components/posts/ShowPost.vue';
 import CreatePost from './components/posts/CreatePost.vue';
+import EditPost from './components/posts/EditPost.vue';
 
 const routes = [
     { path: '/', component: Home, meta: { title: 'Home' } },
@@ -19,6 +22,7 @@ const routes = [
     { path: '/edit-profile', component: EditUser, meta: { title: 'Edit User' } },
     { path: '/post/new', component: CreatePost, meta: { title: 'Create Post' } },
     { path: '/post/:postid', component: ShowPost, meta: { title: ':postname' } },
+    { path: '/post/edit/:postid', component: EditPost, meta: { title: 'Edit Post' } },
     { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
 ];
 

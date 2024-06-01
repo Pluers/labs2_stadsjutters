@@ -64,16 +64,40 @@ class PostController extends Controller
 
         return response()->json($post);
     }
+
     public function update(Request $request, $id)
     {
         $request->validate([
             'title' => 'required',
             'body' => 'required',
+            'image' => 'image',
+            'condition' => 'required',
         ]);
-        // $post = Post::find($id);
-        // $post->title = $request->title;
-        // $post->body = $request->body;
-        // $post->save();
-        return redirect('/post');
+
+        try {
+            $post = Post::findOrFail($id); // This will automatically return a 404 response if the post is not found
+            error_log(print_r($request->all(), true));
+            $post->title = $request->title;
+            $post->body = $request->body;
+            $post->condition = $request->condition;
+            $post->tags = $request->tags ?? $post->tags; // Update tags if provided, otherwise keep the old ones
+
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $hash = hash_file('sha256', $file->getRealPath());
+                $extension = $file->getClientOriginalExtension();
+                $imageName = "{$hash}.{$extension}";
+                $file->storeAs('public/images', $imageName);
+                error_log("Image stored as: public/images/{$imageName}");
+                $post->image = asset("storage/images/{$imageName}");
+                error_log("Image path: " . $post->image);
+            }
+
+            $post->save();
+            error_log("Post saved: " . $post->id);
+            return response()->json(['message' => 'Post updated successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

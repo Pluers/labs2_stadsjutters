@@ -7,6 +7,7 @@
         <p>{{ post.body }}</p>
         <p>{{ post.condition }}</p>
         <img :src="post.image" alt="image">
+        <button v-if="user && post.user_id === user.id" @click="editPost">Edit Post</button>
     </div>
     <div v-else>
         <h1>Post not found</h1>
@@ -16,14 +17,29 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 export default {
     setup() {
         const post = ref('loading'); // Initialize post as 'loading'
         const router = useRouter();
+        const user = ref(null);
+
+        // Get user information
+        const getUser = async () => {
+            try {
+                // try a request to the server to get the user information only when the user is logged in and validated
+                const response = await axios.get('/user');
+                user.value = response.data;
+                console.log(user.value);
+            } catch (error) {
+                console.error('Failed to get user:', error);
+            }
+        };
 
         onMounted(() => {
             fetchPost(router.currentRoute.value.params.postid);
+            getUser();
         });
 
         const fetchPost = async (id) => {
@@ -36,6 +52,7 @@ export default {
                         const data = JSON.parse(text);
                         if (data) {
                             post.value = data;
+                            document.title = data.title;
                         }
                     } catch (error) {
                         console.error('Failed to parse response as JSON:', error);
@@ -51,10 +68,16 @@ export default {
                 post.value = null;
             }
         };
+        const editPost = () => {
+            // Redirect to the edit post page
+            router.push(`/post/edit/${post.value.id}`);
+        };
 
         return {
             post,
-            fetchPost
+            user,
+            fetchPost,
+            editPost
         };
     }
 };
