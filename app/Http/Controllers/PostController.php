@@ -42,17 +42,9 @@ class PostController extends Controller
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 $hash = hash_file('sha256', $file->getRealPath());
-                $timestamp = time();
-                $imageName = "{$hash}-{$timestamp}.webp";
-
-                // Convert and compress image to WebP using ffmpeg
-                $inputPath = $file->getRealPath();
-                $outputPath = storage_path("app/public/images/{$imageName}");
-                $compressionQuality = 80; // Set the compression level (0-100)
-
-                // Execute the ffmpeg command
-                exec("ffmpeg -i {$inputPath} -compression_level {$compressionQuality} {$outputPath}");
-
+                $extension = $file->getClientOriginalExtension();
+                $imageName = "{$hash}.{$extension}";
+                $file->storeAs('public/images', $imageName);
                 $post->image = asset("storage/images/{$imageName}");
             }
 
