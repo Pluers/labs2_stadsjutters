@@ -10,16 +10,16 @@
                 </button>
             </div>
             <div>
-                <label for="name">Title:</label>
-                <input id="name" type="text" required>
+                <label for="title">Title:</label>
+                <input id="title" type="text" v-model="post.title" required>
             </div>
             <div>
-                <label for="name">Body:</label>
-                <input id="name" type="text" required>
+                <label for="body">Body:</label>
+                <input id="body" type="text" v-model="post.body" required>
             </div>
             <div>
-                <label for="name">Condition:</label>
-                <input id="name" type="text" required>
+                <label for="condition">Condition:</label>
+                <input id="condition" type="text" v-model="post.condition" required>
             </div>
             <button class="primary" type="submit">Create</button>
         </form>
@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
     setup() {
@@ -38,6 +39,7 @@ export default {
             tags: '',
             condition: '',
         });
+        const router = useRouter();
         const imageName = ref(''); // Reactive property for the image name
         const imageSrc = ref(''); // Reactive property for the image source
 
@@ -58,18 +60,25 @@ export default {
             formData.append('body', post.value.body);
             formData.append('condition', post.value.condition);
 
-            const response = await fetch('/api/posts', { // replace '/api/posts' with your actual API endpoint
+            // Get the CSRF token from the meta tag
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            const response = await fetch('/post/store', {
                 method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                },
                 body: formData,
             });
 
-            if (!response.ok) {
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                router.push(`/post/${data.post_id}`);
+            } else {
                 const message = `An error has occurred: ${response.status}`;
                 throw new Error(message);
             }
-
-            const result = await response.json();
-            console.log(result);
         };
 
         return {
@@ -78,7 +87,7 @@ export default {
             chooseImage,
             imageName,
             imageSrc,
-            createPost, // add this line
+            createPost,
         };
     },
 };

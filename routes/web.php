@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 
 // PostController
-Route::get('/post', [PostController::class, 'getPost']);
+Route::get('/post/get/{id}', [PostController::class, 'show']);
 Route::post('/post/store', [PostController::class, 'store']);
 Route::get('/post/new', [PostController::class, 'create']);
 Route::get('/post/update', [PostController::class, 'update']);

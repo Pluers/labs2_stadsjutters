@@ -5,6 +5,7 @@
 <head>
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&display=swap" />
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/x-icon">

@@ -13,7 +13,7 @@
             Puts image in a session variable to be used in the preview.
             This has to also have a function for mobile devices to both take a picture and upload it from the device.
         --}}
-        <img id="preview" src="{{ asset(session('image')) }}" alt="Image preview" />
+        <img id="preview" src="{{ asset(session('image')) }}" alt="Image preview" width="100vw" />
         <label for="file">Import image</label>
         <input id="file" type="file" name="file" hidden accept="image/*" capture="camera"
             onchange="previewFile()" />
@@ -22,6 +22,7 @@
         <input type="text" name="title" id="title">
         <label for="content">Content</label>
         <textarea name="content" id="content" cols="30" rows="10"></textarea>
+
         <button type="submit">Create Post</button>
     </form>
 
