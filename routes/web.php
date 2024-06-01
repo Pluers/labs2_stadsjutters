@@ -12,7 +12,7 @@ use App\Models\User;
 Route::get('/post/get/{id}', [PostController::class, 'show']);
 Route::post('/post/store', [PostController::class, 'store']);
 Route::get('/post/new', [PostController::class, 'create']);
-Route::get('/post/update', [PostController::class, 'update']);
+Route::put('/post/update/{id}', [PostController::class, 'update']);
 
 
 // Set the logged in user information in an url to retrieve in vue components
