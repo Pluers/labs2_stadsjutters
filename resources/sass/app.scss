@@ -156,34 +156,40 @@ nav {
         .category {
             margin-bottom: 1rem;
         }
-        .new-posts {
+        .new-posts,
+        .nearby-posts {
             display: flex;
             flex-direction: row;
             overflow-x: scroll;
             scroll-snap-type: x mandatory;
-            .post {
-                flex: 0 0 auto;
-                scroll-snap-align: start;
-                display: grid;
-                width: calc($main-width - $page-margin * 2);
-                grid-template-rows: 1fr 1fr;
-                gap: 1rem;
-                padding: 1rem;
+        }
+        .post {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            display: grid;
+            width: calc($main-width - $page-margin * 2);
+            grid-template-rows: 1fr auto;
+            border-radius: $border-radius;
+            background-color: $secondary;
+            img {
+                width: 100%;
                 border-radius: $border-radius;
-                background-color: $secondary;
-                img {
-                    width: 100%;
-                    border-radius: $border-radius;
+                aspect-ratio: 16 / 9;
+                object-fit: cover;
+            }
+            .post-header {
+                display: flex;
+                justify-content: space-between;
+            }
+            .post-content {
+                display: grid;
+                gap: 0.5rem;
+                padding: 1rem;
+                p {
+                    color: $primary;
                 }
-                .postContent {
-                    display: grid;
-                    gap: 0.5rem;
-                    p {
-                        color: $primary;
-                    }
-                    button {
-                        width: 100%;
-                    }
+                button {
+                    width: 100%;
                 }
             }
         }

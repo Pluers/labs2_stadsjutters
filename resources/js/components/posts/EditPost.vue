@@ -60,7 +60,7 @@ export default {
 
         const fetchPost = async (id) => {
             try {
-                const response = await axios.get(`/post/get/${id}`);
+                const response = await axios.get(`/api/post/get/${id}`);
                 if (response.status === 200) {
                     post.value = response.data;
                     originalPost.value = { ...response.data }; // Set the initial value of originalPost
@@ -97,7 +97,7 @@ export default {
                 console.log([...formData]);
 
                 // Send the form data to the server
-                const response = await axios.post(`/post/update/${post.value.id}`, formData, {
+                const response = await axios.post(`/api/post/update/${post.value.id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

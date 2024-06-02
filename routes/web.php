@@ -3,38 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\User;
 
 // PostController
-Route::get('/post/get/{id}', [PostController::class, 'show']);
-Route::post('/post/store', [PostController::class, 'store']);
+Route::get('/api/post/get/{id}', [PostController::class, 'show']);
+Route::get('/api/post/getall', [PostController::class, 'getPosts']);
+Route::post('/api/post/store', [PostController::class, 'store']);
 Route::get('/post/new', [PostController::class, 'create']);
-Route::put('/post/update/{id}', [PostController::class, 'update']);
+Route::put('/api/post/update/{id}', [PostController::class, 'update']);
 
 
 // Set the logged in user information in an url to retrieve in vue components
 Route::middleware('auth')->group(function () {
-    Route::get('/user', [UserController::class, 'getUser']);
-    Route::put('/edit-profile', function (Request $request) {
-        // Get the current user
-        $user = Auth::user();
-
-        // Update the user's properties with the request data
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        // Update more properties as needed
-
-        // Save the user back to the database
-        if ($user instanceof User) {
-            $user->save();
-        }
-
-        // Return the updated user as a JSON response
-        return $user;
-    });
+    Route::get('/api/user', [UserController::class, 'getUser']);
+    Route::put('/edit-profile', [UserController::class, 'editProfile']);
 });
 
 // General auth routes

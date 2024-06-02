@@ -63,7 +63,7 @@ export default {
             // Get the CSRF token from the meta tag
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            const response = await fetch('/post/store', {
+            const response = await fetch('/api/post/store', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken,

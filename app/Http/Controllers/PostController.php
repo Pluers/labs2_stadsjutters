@@ -18,6 +18,13 @@ class PostController extends Controller
         return response()->json($post);
     }
 
+    public function getPosts(Request $request)
+    {
+        $posts = Post::all();
+
+        return response()->json($posts);
+    }
+
     public function create()
     {
         return view('posts.create');

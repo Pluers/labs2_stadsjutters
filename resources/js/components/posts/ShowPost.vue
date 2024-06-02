@@ -29,7 +29,7 @@ export default {
         const getUser = async () => {
             try {
                 // try a request to the server to get the user information only when the user is logged in and validated
-                const response = await axios.get('/user');
+                const response = await axios.get('/api/user');
                 user.value = response.data;
                 console.log(user.value);
             } catch (error) {
@@ -44,7 +44,7 @@ export default {
 
         const fetchPost = async (id) => {
             try {
-                const response = await fetch(`/post/get/${id}`);
+                const response = await fetch(`/api/post/get/${id}`);
                 if (response.ok) {
                     const text = await response.text();
                     console.log(text); // Log the raw response text
