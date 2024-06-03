@@ -1,15 +1,35 @@
 @extends('layouts.app')
-
+@section('title', 'Register')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Register') }}</div>
-
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
+
+                            <div class="row mb-3">
+                                <label for="picture"
+                                    class="col-md-4 col-form-label text-md-end">{{ __('Profile Picture') }}</label>
+
+                                <div class="col-md-6">
+                                    <img id="preview" src="#" alt="your image"
+                                        style="display: none;aspect-ratio: 1/1;object-fit: cover;width: 100%;" />
+                                    <input id="picture" type="file"
+                                        class="form-control @error('picture') is-invalid @enderror" name="picture"
+                                        accept="image/*" onchange="readURL(this);" hidden>
+                                    <button class="btn secondary">
+                                        <label for="picture">select profile picture</label>
+                                    </button>
+
+                                    @error('picture')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
 
                             <div class="row mb-3">
                                 <label for="first_name"
@@ -90,7 +110,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn primary">
                                         {{ __('Register') }}
                                     </button>
                                 </div>
@@ -101,4 +121,18 @@
             </div>
         </div>
     </div>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    document.getElementById('preview').style.display = 'block';
+                    document.getElementById('preview').src = e.target.result;
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 @endsection

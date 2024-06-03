@@ -30,9 +30,10 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 });
-
 router.afterEach((to) => {
-    document.title = to.meta.title || 'Default Title';
+    if (to.meta.title) {
+        document.title = to.meta.title;
+    }
 });
 
 export default router;
