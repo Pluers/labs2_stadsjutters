@@ -17,6 +17,7 @@ Route::put('/api/post/update/{id}', [PostController::class, 'update']);
 // Set the logged in user information in an url to retrieve in vue components
 Route::middleware('auth')->group(function () {
     Route::get('/api/user', [UserController::class, 'getCurrentUser']);
+    Route::get('/api/user/getall', [UserController::class, 'getAllUsers']);
     Route::get('/api/user/{id}', [UserController::class, 'getUser']);
     Route::put('/api/user/update', [UserController::class, 'editProfile']);
 });

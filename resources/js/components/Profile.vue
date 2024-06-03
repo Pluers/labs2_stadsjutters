@@ -6,6 +6,8 @@
             <p v-if="user">{{ user.role }}</p>
 
             <button class="secondary" v-on:click="this.$router.push('/edit-profile')">Edit Profile</button>
+            <button v-if="user && user.role === 'jutter'" v-on:click="this.$router.push('/admin')">Admin
+                Dashboard</button>
             <hr>
             <!-- All posts from user -->
         </section>
