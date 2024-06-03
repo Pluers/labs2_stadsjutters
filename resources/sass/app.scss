@@ -11,8 +11,6 @@
 
 body {
     max-width: $body-width;
-    display: grid;
-    grid-auto-rows: $nav-height auto $nav-height;
     margin: 0;
     background-color: $background;
     * {
@@ -161,13 +159,14 @@ nav {
             display: flex;
             flex-direction: row;
             overflow-x: scroll;
+            gap: 1rem;
             scroll-snap-type: x mandatory;
         }
         .post {
             flex: 0 0 auto;
             scroll-snap-align: start;
             display: grid;
-            width: calc($main-width - $page-margin * 2);
+            width: calc($main-width - $page-margin * 6);
             grid-template-rows: 1fr auto;
             border-radius: $border-radius;
             background-color: $secondary;
@@ -207,7 +206,7 @@ nav {
 }
 #profile {
     display: grid;
-    grid-template-rows: 1fr 2fr 9fr;
+    grid-template-rows: 1fr 0.5fr auto;
     width: $main-width;
     margin: $page-margin;
     gap: 1rem;
@@ -221,6 +220,11 @@ nav {
     }
     button {
         padding: 0 1rem;
+    }
+}
+#post {
+    img {
+        width: 100vw;
     }
 }
 body a span.material-symbols-rounded {

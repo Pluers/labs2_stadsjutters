@@ -10,17 +10,25 @@ use App\Models\User;
 class UserController extends Controller
 {
 
-    public function getUser()
+    public function getCurrentUser()
     {
-        // Get the currently authenticated user
+
         $user = Auth::user();
 
-        // Return the user as a JSON response
+        if (!$user) {
+            return response()->json(['error' => 'Not logged in'], 401);
+        }
         return response()->json($user);
     }
-    public function getUserApi(Request $request)
+    public function getUser($id)
     {
-        return $request->user();
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        return response()->json($user);
     }
 
     public function editProfile(Request $request)
