@@ -42,6 +42,15 @@ class UserController extends Controller
         $user->email = $request->input('email');
         // Update more properties as needed
 
+        if ($request->hasFile('picture')) {
+            $file = $request->file('picture');
+            $hash = hash_file('sha256', $file->getRealPath());
+            $extension = $file->getClientOriginalExtension();
+            $imageName = "{$hash}.{$extension}";
+            $file->storeAs('public/images', $imageName);
+            $user->picture = asset("storage/images/{$imageName}");
+        }
+
         // Save the user back to the database
         if ($user instanceof User) {
             $user->save();

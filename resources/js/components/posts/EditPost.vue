@@ -5,8 +5,8 @@
     <div v-else-if="post" id="post">
         <h1>Edit Post</h1>
         <form @submit.prevent="submitForm">
+            <img v-if="imageSrc" :src="imageSrc" width="50vw" alt="Selected image">
             <input id="image" type="file" accept="image/*" capture="environment" hidden @change="onImageChange">
-            <img :src="imageSrc || post.image" alt="Post Image">
             <button type="button" class="primary">
                 <label for="image">Choose Image</label>
             </button>

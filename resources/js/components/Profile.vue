@@ -1,7 +1,7 @@
 <template>
     <div id="profile">
         <section>
-            <img src="{{ user.picture }}" alt="Profile Picture Missing">
+            <img v-if="user" :src="user.picture" alt="Profile Picture">
             <h2 v-if="user">{{ user.first_name }}</h2>
             <p v-if="user">{{ user.role }}</p>
 
@@ -10,7 +10,6 @@
             <!-- All posts from user -->
         </section>
     </div>
-
 </template>
 
 <script>

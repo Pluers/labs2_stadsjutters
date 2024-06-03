@@ -3,7 +3,7 @@
         <h1>Create Post</h1>
         <form @submit.prevent="createPost">
             <div>
-                <img :src="imageSrc" width="50vw" alt="Selected image">
+                <img v-if="imageSrc" :src="imageSrc" width="50vw" alt="Selected image">
                 <input id="image" type="file" accept="image/*" capture="environment" hidden @change="onImageChange">
                 <button type="button" class="primary">
                     <label for="image">Choose Image</label>
