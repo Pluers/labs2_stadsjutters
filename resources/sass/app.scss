@@ -227,6 +227,12 @@ nav {
         width: 100vw;
     }
 }
+#settings {
+    section {
+        display: flex;
+        flex-direction: column;
+    }
+}
 body a span.material-symbols-rounded {
     font-size: 32px;
 }

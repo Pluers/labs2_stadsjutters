@@ -9,7 +9,6 @@
             <hr>
             <!-- All posts from user -->
         </section>
-        <button class="secondary" v-on:click="logout">Logout</button><!--Should be moved to settings later-->
     </div>
 
 </template>
@@ -37,20 +36,9 @@ export default {
         // Call the getUser function when the component is mounted
         onMounted(getUser);
 
-        // Log out the user by redirecting to the logout page where the logout function takes care of the rest
-        const logout = async () => {
-            try {
-                await axios.post('/logout');
-                window.location.href = '/login';
-            } catch (error) {
-                console.error('Failed to log out:', error);
-            }
-        };
-
         // return the user and logout function to be used in the template
         return {
             user,
-            logout,
         };
     },
 };

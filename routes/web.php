@@ -5,7 +5,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Auth\UserController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
 // PostController
 Route::get('/api/post/get/{id}', [PostController::class, 'show']);
