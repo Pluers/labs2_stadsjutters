@@ -48,8 +48,10 @@ export default {
         },
         updateOverlayWidth() {
             const overlay = this.$refs.overlay;
-            const style = window.getComputedStyle(overlay);
-            this.overlayWidth = parseFloat(style.width);
+            if (overlay) {
+                const style = window.getComputedStyle(overlay);
+                this.overlayWidth = parseFloat(style.width);
+            }
         },
         handleResize() {
             this.moveOverlay(this.overlayPosition);

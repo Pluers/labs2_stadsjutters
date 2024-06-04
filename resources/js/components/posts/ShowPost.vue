@@ -6,6 +6,7 @@
         <h1>{{ post.title }}</h1>
         <p>{{ post.body }}</p>
         <p>{{ post.condition }}</p>
+        <p>{{ post.user.first_name }} {{ post.user.last_name }}</p>
         <img :src="post.image" alt="image">
         <button v-if="user && post.user_id === user.id" @click="editPost">Edit Post</button>
     </div>
@@ -25,45 +26,38 @@ export default {
         const router = useRouter();
         const user = ref(null);
 
-        // Get user information
-        const getUser = async () => {
-            try {
-                // try a request to the server to get the user information only when the user is logged in and validated
-                const response = await axios.get('/api/user');
-                user.value = response.data;
-                console.log(user.value);
-            } catch (error) {
-                console.error('Failed to get user:', error);
-            }
-        };
-
         onMounted(() => {
             fetchPost(router.currentRoute.value.params.postid);
             getUser();
         });
 
+        const getUser = async () => {
+            try {
+                // try a request to the server to get the user information only when the user is logged in and validated
+                const response = await axios.get('/api/user');
+                user.value = response.data;
+            } catch (error) {
+                console.error('Failed to get user:', error);
+            }
+        };
+
         const fetchPost = async (id) => {
             try {
-                const response = await fetch(`/api/post/get/${id}`);
-                if (response.ok) {
-                    const text = await response.text();
-                    console.log(text); // Log the raw response text
-                    try {
-                        const data = JSON.parse(text);
-                        if (data) {
-                            post.value = data;
-                            document.title = data.title;
-                        }
-                    } catch (error) {
-                        console.error('Failed to parse response as JSON:', error);
+                const response = await axios.get(`/api/post/get/${id}`);
+                if (response.status === 200) {
+                    const postData = response.data;
+                    const userResponse = await axios.get(`/api/user/${postData.user_id}`);
+                    if (userResponse.status === 200) {
+                        postData.user = userResponse.data;
+                    }
+                    if (postData) {
+                        post.value = postData; // now correctly refers to the ref
+                        document.title = postData.title;
                     }
                 } else {
-                    // Set post to null if the response was not OK
-                    // is needed to display the 'Post not found' message
                     post.value = null;
                 }
             } catch (error) {
-                // Set post to null if the fetch failed
                 console.error('Failed to fetch post:', error);
                 post.value = null;
             }
