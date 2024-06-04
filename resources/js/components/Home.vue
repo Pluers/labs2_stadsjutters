@@ -95,7 +95,8 @@ export default {
                         }
                         return post;
                     }));
-                    posts.value = postsWithUser.sort((a, b) => new Date(b.created_on) - new Date(a.created_on));
+                    posts.value = postsWithUser.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    console.log(posts.value)
                 }
             } catch (error) {
                 console.error('Failed to fetch posts:', error);
