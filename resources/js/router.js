@@ -4,6 +4,7 @@ import axios from 'axios';
 import Home from './components/Home.vue';
 import Map from './components/Map.vue';
 import Profile from './components/Profile.vue';
+import UserProfile from './components/Profile.vue';
 import Settings from './components/Settings.vue';
 import Notifications from './components/Notifications.vue';
 import Admin from './components/Admin.vue';
@@ -20,6 +21,7 @@ const routes = [
     { path: '/home', redirect: '/' },
     { path: '/map', component: Map, meta: { title: 'Map' } },
     { path: '/profile', component: Profile, meta: { title: 'Profile' } },
+    { path: '/profile/:userid', component: UserProfile, meta: { title: ':username' } },
     { path: '/settings', component: Settings, meta: { title: 'Settings' } },
     { path: '/notifications', component: Notifications, meta: { title: 'Notifications' } },
     { path: '/edit-profile', component: EditUser, meta: { title: 'Edit User' } },

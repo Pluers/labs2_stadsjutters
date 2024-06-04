@@ -19,7 +19,7 @@
                                     <input id="picture" type="file"
                                         class="form-control @error('picture') is-invalid @enderror" name="picture"
                                         accept="image/*" onchange="readURL(this);" hidden>
-                                    <button class="btn secondary">
+                                    <button type="button" class="btn secondary">
                                         <label for="picture">select profile picture</label>
                                     </button>
 
