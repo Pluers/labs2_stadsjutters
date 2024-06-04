@@ -3,15 +3,16 @@
         <div v-if="user === 'loading'">
             <h1>Loading...</h1>
         </div>
-        <section>
+        <section v-else>
             <img v-if="user && user.picture" :src="user.picture" alt="Profile Picture">
             <h2 v-if="user">{{ user.first_name }}</h2>
             <p v-if="user">{{ user.role }}</p>
-            <p v-if="user">{{ id }} {{ user.id }}</p>
-            <button class="secondary" v-if="id == currentUser.id || currentUser"
+            <p v-if="user">{{ id }} {{ user.id }} {{ currentUser.id }}</p>
+            <button class="secondary" v-if="currentUser.id == user.id || id == currentUser.id"
                 v-on:click="this.$router.push('/edit-profile')">Edit
                 Profile</button>
-            <button class="accent" v-if="user && id === user.id && user.role === 'jutter'"
+            <button class="accent"
+                v-if="user && (id === currentUser.id || currentUser.id == user.id) && user.role === 'jutter'"
                 v-on:click="this.$router.push('/admin')">Admin
                 Dashboard</button>
             <hr>
@@ -35,9 +36,9 @@ export default {
 
         const getUserData = async () => {
             try {
-                let user = await axios.get(`/api/user/${id.value}`);
-                let currentUser = await axios.get('/api/user');
-                return user, currentUser;
+                let responseUser = id.value ? await axios.get(`/api/user/${id.value}`) : null;
+                let responseCurrentUser = await axios.get('/api/user');
+                return { user: responseUser ? responseUser.data : null, currentUser: responseCurrentUser.data };
             } catch (error) {
                 console.error('Failed to get user:', error);
             }
@@ -45,9 +46,10 @@ export default {
 
         const getUser = async () => {
             try {
-                const { user, currentUser } = getUserData();
-                user.value = user.data;
-                currentUser.value = currentUser.data;
+                let data = await getUserData();
+                user.value = data.user;
+                currentUser.value = data.currentUser;
+                console.log('getUser response:', currentUser.value); // Log the response
             } catch (error) {
                 console.error('Failed to get user:', error);
             }
@@ -55,8 +57,10 @@ export default {
 
         const getCurrentUser = async () => {
             try {
-                const { currentUser } = getUserData();
-                user.value = currentUser.data;
+                let data = await getUserData();
+                currentUser.value = data.currentUser;
+                user.value = data.currentUser;
+                console.log('getCurrentUser response:', currentUser.value); // Log the response
             } catch (error) {
                 console.error('Failed to get user:', error);
             }
@@ -68,8 +72,10 @@ export default {
             } else {
                 await getCurrentUser();
             }
-            console.log('getCurrentUser response:', currentUser.value); // Log the response
+            console.log(currentUser.value); // Log the value after the functions have resolved
         });
+
+        console.log(user.value, currentUser.value); // Access the values outside the functions
 
         return {
             user,
