@@ -31,20 +31,8 @@
             <div class="category">
                 <h3>New Posts</h3>
                 <div class="new-posts">
-                    <div class="post" v-if="posts === null">
+                    <div class="loading" v-if="posts === null">
                         Loading...
-                        <div class="post-image">Loading...</div>
-                        <div class="post-content">
-                            <div class="post-header">
-                                <h1 class="post-title">Loading...ㅤ</h1>
-                                <p class="post-title">Loading...ㅤ</p>
-                            </div>
-                            <div class="post-body">
-                                Loading...
-                                Loading...
-                                Loading...
-                            </div>
-                        </div>
                     </div>
                     <router-link v-for="post in (posts ? posts.slice(0, 5) : [])" :key="post.id"
                         :to="{ path: `/post/${post.id}`, params: { id: post.id } }" class="post">
@@ -66,7 +54,7 @@
             <div class="category">
                 <h3>Nearby</h3>
                 <div class="nearby-posts">
-                    <div class="post" v-if="posts === null">Loading...</div>
+                    <div class="loading" v-if="posts === null">Loading...</div>
                     <router-link v-for="post in (posts ? posts.slice(0, 2) : [])" :key="post.id"
                         :to="{ path: `/post/${post.id}`, params: { id: post.id } }" class="post">
                         <img class="post-image" :src="post.image" alt="" />

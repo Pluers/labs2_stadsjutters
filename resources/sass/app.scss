@@ -203,10 +203,11 @@ nav {
     width: $main-width;
     margin: $page-margin;
     gap: 1rem;
+    width: 100%;
 }
 #profile {
     display: grid;
-    grid-template-rows: 1fr 0.5fr auto;
+    grid-template-rows: 1fr auto auto;
     width: $main-width;
     margin: $page-margin;
     gap: 1rem;
@@ -220,6 +221,25 @@ nav {
     }
     button {
         padding: 0 1rem;
+    }
+    .user-posts {
+        display: flex;
+        width: 100%;
+        gap: 1rem;
+        flex-direction: column;
+        .post {
+            display: flex;
+            flex-direction: column;
+            background: $secondary;
+            border-radius: $border-radius;
+            img {
+                width: 100%;
+                border-radius: $border-radius;
+            }
+            .post-content {
+                margin: 1rem;
+            }
+        }
     }
 }
 #post {
