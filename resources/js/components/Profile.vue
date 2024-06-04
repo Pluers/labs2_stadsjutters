@@ -7,7 +7,9 @@
             <img v-if="user && user.picture" :src="user.picture" alt="Profile Picture">
             <h2 v-if="user">{{ user.first_name }}</h2>
             <p v-if="user">{{ user.role }}</p>
-            <p v-if="user">{{ id }} {{ user.id }} {{ currentUser.id }}</p>
+            <p v-if="user">url id: {{ id }}</p>
+            <p v-if="user">posts user id: {{ user.id }}</p>
+            <p v-if="user">current logged in user: {{ currentUser.id }}</p>
             <button class="secondary" v-if="currentUser.id == user.id || id == currentUser.id"
                 v-on:click="this.$router.push('/edit-profile')">Edit
                 Profile</button>
