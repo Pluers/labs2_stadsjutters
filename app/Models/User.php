@@ -6,10 +6,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Notification;
 
+/**
+ * @method \Illuminate\Database\Eloquent\Relations\MorphMany notifications()
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    public function notifications()
+    {
+        return $this->morphMany(Notification::class, 'notifiable')->orderBy('created_at', 'desc');
+    }
 
     /**
      * The attributes that are mass assignable.

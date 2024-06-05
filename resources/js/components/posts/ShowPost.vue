@@ -1,5 +1,13 @@
 <template>
-    <div v-if="post === 'loading'">
+    <div id="profile" v-if="post === 'notFound'">
+        <h1>Post not found</h1>
+        <router-link :to="{ name: 'Home' }">
+            <button class="secondary">
+                Back Home
+            </button>
+        </router-link>
+    </div>
+    <div v-else-if="post === 'loading'">
         <h1>Loading...</h1>
     </div>
     <div v-else-if="post" id="post">
@@ -18,7 +26,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 
@@ -27,11 +35,7 @@ export default {
         const post = ref('loading'); // Initialize post as 'loading'
         const router = useRouter();
         const user = ref(null);
-
-        onMounted(() => {
-            fetchPost(router.currentRoute.value.params.postid);
-            getUser();
-        });
+        const id = computed(() => router.currentRoute.value.params.postid)
 
         const getUser = async () => {
             try {
@@ -57,17 +61,23 @@ export default {
                         document.title = postData.title;
                     }
                 } else {
-                    post.value = null;
+                    post.value = 'notFound';
                 }
             } catch (error) {
                 console.error('Failed to fetch post:', error);
-                post.value = null;
+                post.value = 'notFound';
             }
         };
         const editPost = () => {
             // Redirect to the edit post page
             router.push(`/post/edit/${post.value.id}`);
         };
+
+        onMounted(async () => {
+            await getUser();
+            await fetchPost(id.value);
+            console.log(post, id);
+        });
 
         return {
             post,

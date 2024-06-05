@@ -10,7 +10,7 @@
         All are retrieved from the list below in the scripts element called routes
     -->
     <router-link v-for="(route, index) in routes" :key="index" :to="route.path"
-        @click.native="moveOverlay(route.position)">
+        @click.native="handleClick(route.position)">
         <span class="material-symbols-rounded" :class="{ selected: isNear(route.position) && isNavbarRoute }">
             {{ route.icon }}
         </span>
@@ -59,7 +59,14 @@ export default {
         isNear(target) {
             const range = 10;
             return Math.abs(this.overlayPosition - target) <= range;
-        }
+        },
+        handleClick(position) {
+            this.moveOverlay(position);
+            this.scrollToTop();
+        },
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
     },
     watch: {
         '$route'(to, from) {
