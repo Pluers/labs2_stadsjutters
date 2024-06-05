@@ -13,7 +13,13 @@ use App\Models\User;
 
 class PostController extends Controller
 {
-    public function getAll(Request $request)
+    public function getAll()
+    {
+        $posts = Post::with('user')->get();
+
+        return response()->json($posts);
+    }
+    public function getPosts(Request $request)
     {
         $id = $request->query('id');
 
@@ -21,12 +27,6 @@ class PostController extends Controller
         $post = Post::with('user')->find($id);
 
         return response()->json($post);
-    }
-    public function getPosts()
-    {
-        $posts = Post::all();
-
-        return response()->json($posts);
     }
     public function getPostsByUserId($userId)
     {

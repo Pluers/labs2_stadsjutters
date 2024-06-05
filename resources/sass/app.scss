@@ -224,7 +224,6 @@ nav {
         }
     }
 }
-#map,
 #profile,
 #settings,
 #notifications,
@@ -311,6 +310,24 @@ nav {
                 object-fit: cover;
             }
         }
+    }
+}
+#map {
+    user-select: none;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline-style: none;
+    z-index: 0;
+    .popup-image {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 12px;
+        object-fit: cover;
+        margin-right: 1rem;
     }
 }
 body a span.material-symbols-rounded {

@@ -11,8 +11,14 @@
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
     <link rel="preload" fetchpriority="high" as="image"
         href="{{ asset('logo-met-witte-achtergrond-stadsjutters-1.webp') }}" type="image/png">
+    {{-- For the map import --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    {{-- For the map import --}}
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
 <body>
