@@ -1,5 +1,13 @@
 <template>
-    <div id="profile" v-if="user === 'loading'">
+    <div id="profile" v-if="user === 'notFound'">
+        <h1>User not found</h1>
+        <router-link :to="{ name: 'Home' }">
+            <button class="secondary">
+                Back Home
+            </button>
+        </router-link>
+    </div>
+    <div id="profile" v-else-if="user === 'loading'">
         <h1>Loading...</h1>
     </div>
     <div id="profile" v-else>
@@ -76,6 +84,7 @@ export default {
                 currentUser.value = data.currentUser;
             } catch (error) {
                 console.error('Failed to get user:', error);
+                return user.value = 'notFound';
             }
         };
 
@@ -111,6 +120,7 @@ export default {
         };
 
         onMounted(async () => {
+
             if (id.value) {
                 await getUser();
             } else {

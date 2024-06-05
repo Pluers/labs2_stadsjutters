@@ -12,10 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('notifications', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->string('image')->nullable();
+            $table->string('post_id')->nullable()->foreign('post_id')->references('id')->on('posts');
             $table->string('title');
             $table->text('body');
+            $table->string('location')->nullable();
+            $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });
     }

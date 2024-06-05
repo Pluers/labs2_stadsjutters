@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\Notification;
+use App\Notifications\NewPost;
+use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Log;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -25,10 +30,6 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
-    public function create()
-    {
-        return view('posts.create');
-    }
     public function store(Request $request)
     {
         $request->validate([
@@ -57,9 +58,27 @@ class PostController extends Controller
 
             $post->save();
 
+            // Get all users with the role of "jutter"
+            $jutters = User::where('role', 'jutter')->get();
+
+            foreach ($jutters as $jutter) {
+                // Create a new notification for the user
+                $jutter->notifications()->create([
+                    'id' => (string) Str::uuid(),
+                    'type' => NewPost::class,
+                    'post_id' => $post->id,
+                    'title' => ("New post created by " . auth()->user()->first_name . " " . auth()->user()->last_name),
+                    'body' => ($request->title . "  " . $request->body),
+                    'image' => $post->image,
+                    'location' => 'posts',
+                ]);
+            }
+
             return response()->json(['message' => 'Post created successfully.', 'post_id' => $post->id]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+        } catch (\Exception $error) {
+            Log::error('Error creating notification: ' . $error->getMessage());
+            Log::error('Stack trace: ' . $error->getTraceAsString());
+            return response()->json(['error' => $error->getMessage()], 500);
         }
     }
     public function show($id)
@@ -106,5 +125,16 @@ class PostController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+        if (!$post) {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
+
+        $post->delete();
+
+        return response()->json(['message' => 'Post deleted successfully']);
     }
 }

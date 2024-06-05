@@ -69,4 +69,16 @@ class UserController extends Controller
         // Return the updated user as a JSON response
         return $user;
     }
+    public function destroy($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted successfully']);
+    }
 }
