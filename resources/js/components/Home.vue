@@ -1,6 +1,6 @@
 <template>
     <div id="home">
-        <button class="accent" v-on:click="this.$router.push('/post/new')">
+        <button class="accent" v-on:click="this.$router.push('NewPost')">
             <!-- New post -->
             Nieuwe Post
         </button>
@@ -35,7 +35,7 @@
                         Loading...
                     </div>
                     <router-link v-for="post in (posts ? posts.slice(0, 5) : [])" :key="post.id"
-                        :to="{ path: `/post/${post.id}`, params: { id: post.id } }" class="post">
+                        :to="{ name: 'Post', params: { postid: post.id } }" class="post">
                         <img class="post-image" :src="post.image" alt="" />
                         <div class="post-content">
                             <div class="post-header">
@@ -56,7 +56,7 @@
                 <div class="nearby-posts">
                     <div class="loading" v-if="posts === null">Loading...</div>
                     <router-link v-for="post in (posts ? posts.slice(0, 2) : [])" :key="post.id"
-                        :to="{ path: `/post/${post.id}`, params: { id: post.id } }" class="post">
+                        :to="{ name: 'Post', params: { postid: post.id } }" class="post">
                         <img class="post-image" :src="post.image" alt="" />
                         <div class="post-content">
                             <div class="post-header">
@@ -96,7 +96,6 @@ export default {
                         return post;
                     }));
                     posts.value = postsWithUser.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                    console.log(posts.value)
                 }
             } catch (error) {
                 console.error('Failed to fetch posts:', error);

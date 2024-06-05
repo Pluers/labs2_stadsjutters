@@ -6,7 +6,9 @@
         <h1>{{ post.title }}</h1>
         <p>{{ post.body }}</p>
         <p>{{ post.condition }}</p>
-        <p>{{ post.user.first_name }} {{ post.user.last_name }}</p>
+        <router-link :to="{ name: 'UserProfile', params: { userid: post.user.id } }">
+            {{ post.user.first_name }} {{ post.user.last_name }}
+        </router-link>
         <img :src="post.image" alt="image">
         <button v-if="user && post.user_id === user.id" @click="editPost">Edit Post</button>
     </div>

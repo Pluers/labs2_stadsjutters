@@ -17,19 +17,19 @@ import CreatePost from './components/posts/CreatePost.vue';
 import EditPost from './components/posts/EditPost.vue';
 
 const routes = [
-    { path: '/', component: Home, meta: { title: 'Home' } },
+    { path: '/', name: 'Home', component: Home, meta: { title: 'Home' } },
     { path: '/home', redirect: '/' },
-    { path: '/map', component: Map, meta: { title: 'Map' } },
-    { path: '/profile', component: Profile, meta: { title: 'Profile' } },
-    { path: '/profile/:userid', component: UserProfile, meta: { title: ':username' } },
-    { path: '/settings', component: Settings, meta: { title: 'Settings' } },
-    { path: '/notifications', component: Notifications, meta: { title: 'Notifications' } },
-    { path: '/edit-profile', component: EditUser, meta: { title: 'Edit User' } },
-    { path: '/post/new', component: CreatePost, meta: { title: 'Create Post' } },
-    { path: '/post/:postid', component: ShowPost, meta: { title: ':postname' } },
-    { path: '/post/edit/:postid', component: EditPost, meta: { title: 'Edit Post' } },
-    { path: '/admin', component: Admin, meta: { title: 'Admin Dashboard', requiresAuth: true, isAdmin: true } },
-    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
+    { path: '/map', name: 'Map', component: Map, meta: { title: 'Map' } },
+    { path: '/profile', name: 'Profile', component: Profile, meta: { title: 'Profile' } },
+    { path: '/profile/:userid', name: 'UserProfile', component: UserProfile, meta: { title: ':username' } },
+    { path: '/settings', name: 'Settings', component: Settings, meta: { title: 'Settings' } },
+    { path: '/notifications', name: 'Notifications', component: Notifications, meta: { title: 'Notifications' } },
+    { path: '/edit-profile', name: 'EditProfile', component: EditUser, meta: { title: 'Edit User' } },
+    { path: '/post/new', name: 'NewPost', component: CreatePost, meta: { title: 'Create Post' } },
+    { path: '/post/:postid', name: 'Post', component: ShowPost, meta: { title: ':postname' } },
+    { path: '/post/edit/:postid', name: 'EditPost', component: EditPost, meta: { title: 'Edit Post' } },
+    { path: '/admin', name: 'Admin', component: Admin, meta: { title: 'Admin Dashboard', requiresAuth: true, isAdmin: true } },
+    { path: '/:pathMatch(.*)*', name: '404', name: 'not-found', component: NotFound },
 ];
 
 const router = createRouter({

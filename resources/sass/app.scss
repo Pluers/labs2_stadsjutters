@@ -49,6 +49,7 @@ button {
     border-radius: 12px;
     align-items: center;
     justify-content: center;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
     &.primary {
         background-color: $primary;
         color: $secondary;
@@ -105,10 +106,14 @@ nav {
 }
 #home {
     display: grid;
-    grid-template-rows: 1fr 2fr 9fr;
+    grid-template-rows: 0.8fr 1.5fr 9fr;
     width: $main-width;
     margin: $page-margin;
     gap: 1rem;
+    button {
+        height: 100%;
+        font-size: 1.2rem;
+    }
     #filterElement {
         border-radius: $border-radius;
         display: grid;

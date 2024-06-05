@@ -86,7 +86,7 @@ export default {
                 if (response.ok) {
                     const data = await response.json();
                     console.log(data);
-                    router.push(`/profile`);
+                    router.push(`profile`);
                 } else {
                     const errorData = await response.text(); // Get the response body as text
                     console.error('Server responded with an error:', errorData);

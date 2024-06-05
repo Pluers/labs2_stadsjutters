@@ -11,11 +11,11 @@
             <p v-if="user">posts user id: {{ user.id }}</p>
             <p v-if="user">current logged in user: {{ currentUser.id }}</p>
             <button class="secondary" v-if="currentUser.id == user.id || id == currentUser.id"
-                v-on:click="this.$router.push('/edit-profile')">Edit
+                v-on:click="this.$router.push('EditProfile')">Edit
                 Profile</button>
             <button class="accent"
                 v-if="user && (id === currentUser.id || currentUser.id == user.id) && user.role === 'jutter'"
-                v-on:click="this.$router.push('/admin')">Admin
+                v-on:click="this.$router.push('Admin')">Admin
                 Dashboard</button>
         </section>
         <hr>
@@ -26,7 +26,7 @@
                     Loading...
                 </div>
                 <router-link v-for="post in (posts ? posts.slice(0, 5) : [])" :key="post.id"
-                    :to="{ path: `/post/${post.id}`, params: { id: post.id } }" class="post">
+                    :to="{ name: 'Post', params: { postid: post.id } }" class="post">
                     <img class="post-image" :src="post.image" alt="" />
                     <div class="post-content">
                         <div class="post-header">
@@ -92,11 +92,12 @@ export default {
             try {
                 let data = await getUserData();
                 const userId = data.user ? data.user.id : data.currentUser.id;
-                console.log(data.posts);
                 if (data.posts) {
                     const postsWithUser = await Promise.all(data.posts.map(async post => {
-                        if (data.user) {
-                            post.user = data.user;
+                        // to get the specific user information per post
+                        const userResponse = await axios.get(`/api/user/${post.user_id}`);
+                        if (userResponse.status === 200) {
+                            post.user = userResponse.data;
                         }
                         return post;
                     }));
@@ -117,8 +118,6 @@ export default {
             }
             getPosts();
         });
-
-        console.log(user.value, currentUser.value); // Access the values outside the functions
 
         return {
             user,

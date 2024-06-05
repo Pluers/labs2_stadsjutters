@@ -35,5 +35,7 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-navbarApp.use(router).mount('nav');
+if (document.querySelector('header')) {
+    navbarApp.use(router).mount('nav');
+}
 app.use(router).mount('main');
