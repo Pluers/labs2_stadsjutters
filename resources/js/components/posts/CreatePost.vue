@@ -19,7 +19,17 @@
             </div>
             <div>
                 <label for="condition">Condition:</label>
-                <input id="condition" type="text" v-model="post.condition" required>
+                <select id="condition" v-model="post.condition" required>
+                    <option disabled value="">Please select one</option>
+                    <option>New</option>
+                    <option>Used</option>
+                </select>
+            </div>
+            <div>
+                <label for="location">Location:</label>
+                <input id="location" type="text" v-model="post.location" :hidden="post.location" required>
+                <p>{{ post.location }}</p>
+                <button type="button" @click="getLocation">Get Location</button>
             </div>
             <button class="primary" type="submit">Create</button>
         </form>
@@ -38,6 +48,7 @@ export default {
             body: '',
             tags: '',
             condition: '',
+            location: '',
         });
         const router = useRouter();
         const imageName = ref(''); // Reactive property for the image name
@@ -59,7 +70,11 @@ export default {
             formData.append('title', post.value.title);
             formData.append('body', post.value.body);
             formData.append('condition', post.value.condition);
+            formData.append('location', post.value.location);
 
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
             // Get the CSRF token from the meta tag
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
@@ -89,6 +104,17 @@ export default {
             imageSrc,
             createPost,
         };
+    },
+    methods: {
+        getLocation: function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    this.post.location = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        },
     },
 };
 </script>

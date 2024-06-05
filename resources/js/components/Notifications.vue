@@ -1,7 +1,6 @@
 <template>
     <div id="notifications">
         <h1>Notifications</h1>
-        <p>Welcome to the notifications page!</p>
         <div class="notifications" v-for="notification in notifications" :key="notification.id">
             <div class="notification">
                 <img :src="notification.image" alt="">
@@ -12,10 +11,9 @@
                         </router-link>
                     </h3>
                     <p>{{ notification.body }} {{ notification.location }}</p>
+                    <button @click="deleteNotification(notification.id)">Delete</button>
                 </div>
-
             </div>
-
         </div>
     </div>
 </template>
@@ -30,9 +28,23 @@ export default {
         };
     },
     async created() {
-        const response = await axios.get('/api/notifications');
-        this.notifications = response.data;
-        console.log(this.notifications);
+        await this.fetchNotifications();
+    },
+    methods: {
+        async fetchNotifications() {
+            const response = await axios.get('/api/notifications');
+            this.notifications = response.data;
+            return this.notifications;
+        },
+        async deleteNotification(id) {
+            await axios.delete(`/api/notifications/delete/${id}`);
+            const notifications = await this.fetchNotifications();
+            if (notifications.length < 1) {
+                location.reload();
+            } else {
+                fetchNotifications();
+            }
+        },
     },
 };
 </script>

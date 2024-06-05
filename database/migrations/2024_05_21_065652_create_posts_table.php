@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('tags')->nullable();
             $table->string('condition');
+            $table->string('location');
+            $table->date('available_until')->nullable();;
             $table->timestamps();
         });
     }

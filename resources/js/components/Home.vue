@@ -31,10 +31,10 @@
             <div class="category">
                 <h3>New Posts</h3>
                 <div class="new-posts">
-                    <div class="loading" v-if="posts === null">
+                    <div class="loading" v-if="newPosts === null">
                         Loading...
                     </div>
-                    <router-link v-for="post in (posts ? posts.slice(0, 5) : [])" :key="post.id"
+                    <router-link v-for="post in (newPosts ? newPosts.slice(0, 5) : [])" :key="post.id"
                         :to="{ name: 'Post', params: { postid: post.id } }" class="post">
                         <img class="post-image" :src="post.image" alt="" />
                         <div class="post-content">
@@ -82,20 +82,15 @@ import axios from 'axios';
 
 export default {
     setup() {
+        const newPosts = ref(null);
         const posts = ref(null);
 
         onMounted(async () => {
             try {
                 const response = await axios.get('/api/post/getall');
                 if (response.status === 200) {
-                    const postsWithUser = await Promise.all(response.data.map(async post => {
-                        const userResponse = await axios.get(`/api/user/${post.user_id}`);
-                        if (userResponse.status === 200) {
-                            post.user = userResponse.data;
-                        }
-                        return post;
-                    }));
-                    posts.value = postsWithUser.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    newPosts.value = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    posts.value = response.data.sort((a, b) => a.location.localeCompare(b.location));
                 }
             } catch (error) {
                 console.error('Failed to fetch posts:', error);
@@ -103,6 +98,7 @@ export default {
         });
 
         return {
+            newPosts,
             posts
         };
     },

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 // PostController
 Route::get('/api/post/get/{id}', [PostController::class, 'show']);
+Route::get('/api/post/user/get/{id}', [PostController::class, 'getPostsByUserId']);
 Route::get('/api/post/getall', [PostController::class, 'getPosts']);
 Route::post('/api/post/store', [PostController::class, 'store']);
 Route::put('/api/post/update/{id}', [PostController::class, 'update']);
@@ -25,6 +26,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/api/notifications', [NotificationsController::class, 'index']);
+Route::delete('/api/notifications/delete/{id}', [NotificationsController::class, 'destroy']);
+
 
 // General auth routes
 Auth::routes();
