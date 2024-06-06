@@ -13,20 +13,24 @@ use App\Models\User;
 
 class PostController extends Controller
 {
-    public function getPost(Request $request)
+    public function getAll()
+    {
+        $posts = Post::with('user')->get();
+
+        return response()->json($posts);
+    }
+    public function getPosts(Request $request)
     {
         $id = $request->query('id');
 
-        // Fetch the post by its ID and return it as JSON
-        $post = Post::find($id);
+        // Fetch the post by its ID along with the user data and return it as JSON
+        $post = Post::with('user')->find($id);
 
         return response()->json($post);
     }
-
-    public function getPosts(Request $request)
+    public function getPostsByUserId($userId)
     {
-        $posts = Post::all();
-
+        $posts = Post::with('user')->where('user_id', $userId)->get();
         return response()->json($posts);
     }
 
@@ -44,6 +48,7 @@ class PostController extends Controller
             $post->title = $request->title;
             $post->body = $request->body;
             $post->condition = $request->condition;
+            $post->location = $request->location;
             $post->tags = $request->tags ?? null; // Assign tags if provided, otherwise set to null
             $post->user_id = auth()->id(); // Get the ID of the currently authenticated user
 
@@ -70,7 +75,8 @@ class PostController extends Controller
                     'title' => ("New post created by " . auth()->user()->first_name . " " . auth()->user()->last_name),
                     'body' => ($request->title . "  " . $request->body),
                     'image' => $post->image,
-                    'location' => 'posts',
+                    'condition' => $post->condition,
+                    'location' => $post->location,
                 ]);
             }
 
@@ -98,6 +104,7 @@ class PostController extends Controller
             'body' => 'required',
             'image' => 'image',
             'condition' => 'required',
+            'location' => 'required',
         ]);
 
         try {
@@ -106,6 +113,7 @@ class PostController extends Controller
             $post->title = $request->title;
             $post->body = $request->body;
             $post->condition = $request->condition;
+            $post->location = $request->location;
             $post->tags = $request->tags ?? $post->tags; // Update tags if provided, otherwise keep the old ones
 
             if ($request->hasFile('image')) {

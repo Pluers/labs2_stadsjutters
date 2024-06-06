@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('post_id')->nullable()->foreign('post_id')->references('id')->on('posts');
             $table->string('title');
             $table->text('body');
+            $table->string('condition');
             $table->string('location')->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamps();

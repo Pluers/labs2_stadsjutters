@@ -68,10 +68,17 @@ export default {
 
         const getUserData = async () => {
             try {
-                let responseUser = id.value ? await axios.get(`/api/user/${id.value}`) : null;
-                let responseCurrentUser = await axios.get('/api/user');
-                let posts = await axios.get('/api/post/getall');
-                return { user: responseUser ? responseUser.data : null, currentUser: responseCurrentUser.data, posts: posts.data };
+                let userPromise = id.value ? axios.get(`/api/user/${id.value}`) : Promise.resolve(null);
+                let currentUserPromise = axios.get('/api/user');
+                let postsPromise = axios.get('/api/post/getall');
+
+                let [responseUser, responseCurrentUser, posts] = await Promise.all([userPromise, currentUserPromise, postsPromise]);
+
+                return {
+                    user: responseUser ? responseUser.data : null,
+                    currentUser: responseCurrentUser.data,
+                    posts: posts.data
+                };
             } catch (error) {
                 console.error('Failed to get user:', error);
             }
@@ -99,20 +106,10 @@ export default {
         };
         const getPosts = async () => {
             try {
-                let data = await getUserData();
-                const userId = data.user ? data.user.id : data.currentUser.id;
-                if (data.posts) {
-                    const postsWithUser = await Promise.all(data.posts.map(async post => {
-                        // to get the specific user information per post
-                        const userResponse = await axios.get(`/api/user/${post.user_id}`);
-                        if (userResponse.status === 200) {
-                            post.user = userResponse.data;
-                        }
-                        return post;
-                    }));
-                    posts.value = postsWithUser
-                        .filter(post => post.user_id == userId)
-                        .sort((a, b) => new Date(b.created_on) - new Date(a.created_on));
+                const userId = user.value ? user.value.id : currentUser.value.id;
+                const response = await axios.get(`/api/post/user/get/${userId}`);
+                if (response.status === 200) {
+                    posts.value = response.data.sort((a, b) => new Date(b.created_on) - new Date(a.created_on));
                 }
             } catch (error) {
                 console.error('Failed to fetch posts:', error);

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Notifications\NewPost;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
+use App\Models\Notification;
 
 class NotificationsController extends Controller
 {
@@ -26,8 +25,10 @@ class NotificationsController extends Controller
         }
     }
 
-    public function create()
+    public function destroy($id)
     {
-        return null;
+        $notification = Notification::find($id);
+        $notification->delete();
+        return response()->json(['notification' => $notification, 'message' => 'Notification deleted'], 204);
     }
 }

@@ -31,6 +31,7 @@ header {
         height: $nav-img-height;
     }
     a {
+        display: flex;
         color: $secondary;
         text-decoration: none;
     }
@@ -127,7 +128,7 @@ nav {
         text-decoration: none;
     }
     display: grid;
-    grid-template-rows: 0.8fr 1.5fr 9fr;
+    grid-template-rows: 4rem 8rem auto;
     width: $main-width;
     margin: $page-margin;
     gap: 1rem;
@@ -149,7 +150,7 @@ nav {
                 border: none;
                 border-radius: $border-radius;
                 font-size: 16px;
-                color: $secondary;
+                color: $primary;
                 background-color: $secondary;
             }
             & a {
@@ -188,40 +189,41 @@ nav {
             gap: 1rem;
             scroll-snap-type: x mandatory;
         }
-        .post {
-            flex: 0 0 auto;
-            scroll-snap-align: start;
-            display: grid;
-            width: calc($main-width - $page-margin * 6);
-            grid-template-rows: 1fr auto;
-            border-radius: $border-radius;
-            background-color: $secondary;
-            img {
-                width: 100%;
-                border-radius: $border-radius;
-                aspect-ratio: 16 / 9;
-                object-fit: cover;
-            }
-            .post-header {
-                display: flex;
-                justify-content: space-between;
-            }
-            .post-content {
-                display: grid;
-                gap: 0.5rem;
-                padding: 1rem;
-                p {
-                    color: $primary;
-                }
-                button {
-                    width: 100%;
-                }
-            }
+    }
+}
+.post {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    display: grid;
+    width: calc($main-width - $page-margin * 6);
+    grid-template-rows: 1fr auto;
+    border-radius: $border-radius;
+    background-color: $secondary;
+    &.search_result {
+        width: 100%;
+    }
+    img {
+        width: 100%;
+        border-radius: $border-radius;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+    }
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .post-content {
+        display: grid;
+        gap: 0.5rem;
+        padding: 1rem;
+        p {
+            color: $primary;
+        }
+        button {
+            width: 100%;
         }
     }
 }
-
-#map,
 #profile,
 #settings,
 #notifications,
@@ -258,6 +260,7 @@ nav {
         flex-direction: column;
         .post {
             display: flex;
+            width: 100%;
             flex-direction: column;
             background: $secondary;
             border-radius: $border-radius;
@@ -308,6 +311,24 @@ nav {
                 object-fit: cover;
             }
         }
+    }
+}
+#map {
+    user-select: none;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline-style: none;
+    z-index: 0;
+    .popup-image {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 12px;
+        object-fit: cover;
+        margin-right: 1rem;
     }
 }
 body a span.material-symbols-rounded {

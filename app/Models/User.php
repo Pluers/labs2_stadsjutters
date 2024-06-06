@@ -19,6 +19,10 @@ class User extends Authenticatable
     {
         return $this->morphMany(Notification::class, 'notifiable')->orderBy('created_at', 'desc');
     }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 
     /**
      * The attributes that are mass assignable.
