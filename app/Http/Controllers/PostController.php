@@ -76,7 +76,7 @@ class PostController extends Controller
                     'body' => ($request->title . "  " . $request->body),
                     'image' => $post->image,
                     'condition' => $post->condition,
-                    'location' => $post->location,
+                    'location' => $request->input('address'),
                 ]);
             }
 

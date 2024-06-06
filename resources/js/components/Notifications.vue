@@ -1,8 +1,8 @@
 <template>
     <div id="notifications">
         <h1>Notifications</h1>
-        <div class="notifications" v-for="notification in notifications" :key="notification.id">
-            <div class="notification">
+        <div class="notifications">
+            <div class="notification" v-for="notification in notifications" :key="notification.id">
                 <img :src="notification.image" alt="">
                 <div class="notification-content">
                     <h3>
@@ -10,7 +10,7 @@
                             {{ notification.title }}
                         </router-link>
                     </h3>
-                    <p>{{ notification.body }} {{ notification.location }}</p>
+                    <p>{{ notification.location }}</p>
                     <button @click="deleteNotification(notification.id)">Delete</button>
                 </div>
             </div>

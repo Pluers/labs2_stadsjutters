@@ -29,36 +29,27 @@
         <hr>
         <section>
             <!-- All posts from user -->
-            <div class="user-posts">
+            <template class="user-posts">
                 <div class="loading" v-if="posts === null">
                     Loading...
                 </div>
-                <router-link v-for="post in (posts ? posts.slice(0, 5) : [])" :key="post.id"
-                    :to="{ name: 'Post', params: { postid: post.id } }" class="post">
-                    <img class="post-image" :src="post.image" alt="" />
-                    <div class="post-content">
-                        <div class="post-header">
-                            <h1 class="post-title">{{ post.title }}</h1>
-                            <p class="post-title">{{ post.tags }}</p>
-                        </div>
-                        <div class="post-body">
-                            {{ post.body }}
-                            {{ post.user ? `${post.user.first_name} ${post.user.last_name}` : 'User not found' }}
-                            {{ new Date(post.created_at).toLocaleDateString() }}
-                        </div>
-                    </div>
-                </router-link>
-            </div>
+                <Post v-else v-for="post in (posts ? posts.slice(0, 10) : [])" :key="post.id" :post="post" />
+            </template>
         </section>
     </div>
 </template>
 
 <script>
 import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import Post from './components/Post.vue';
 import axios from 'axios';
-import { useRouter } from 'vue-router'; // import useRouter
 
 export default {
+
+    components: {
+        Post
+    },
     setup() {
         const user = ref('loading');
         const currentUser = ref(null);

@@ -28,7 +28,7 @@
             <div>
                 <label for="location">Location:</label>
                 <input id="location" type="text" v-model="post.location" :hidden="post.location" required>
-                <p>{{ post.location }}</p>
+                <p>{{ post.address }}</p>
                 <button type="button" @click="getLocation">Get Location</button>
             </div>
             <button class="primary" type="submit">Create</button>
@@ -71,6 +71,7 @@ export default {
             formData.append('body', post.value.body);
             formData.append('condition', post.value.condition);
             formData.append('location', post.value.location);
+            formData.append('address', post.value.address);
 
             for (var pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
@@ -106,10 +107,14 @@ export default {
         };
     },
     methods: {
-        getLocation: function () {
+        async getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`);
+                    const data = await response.json();
+                    const address = data.address;
                     this.post.location = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+                    this.post.address = `${address.road}${address.house_number ? ' ' + address.house_number : ''}   ${address.postcode}, ${address.suburb ? address.suburb : address.city}, ${address.state}`;
                 });
             } else {
                 alert("Geolocation is not supported by this browser.");
@@ -118,7 +123,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-/* Your CSS here */
-</style>
