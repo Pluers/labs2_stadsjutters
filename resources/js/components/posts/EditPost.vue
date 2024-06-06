@@ -17,10 +17,21 @@
             <label for="body">Body:</label>
             <textarea id="body" v-model="post.body"></textarea>
 
-            <label for="condition">Condition:</label>
-            <input id="condition" v-model="post.condition">
-
-            <button type="submit">Submit</button>
+            <div>
+                <label for="condition">Condition:</label>
+                <select id="condition" v-model="post.condition" required>
+                    <option disabled value="">Please select one</option>
+                    <option>New</option>
+                    <option>Used</option>
+                </select>
+            </div>
+            <div>
+                <label for="location">Location:</label>
+                <input id="location" type="text" v-model="post.location" :hidden="post.location" required>
+                <p>{{ post.location }}</p>
+                <button type="button" @click="getLocation">Get Location</button>
+            </div>
+            <button type="submit">Edit post</button>
         </form>
     </div>
     <div v-else>
@@ -30,10 +41,10 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-const originalPost = ref(null); // Declare originalPost
-
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+
+const originalPost = ref(null); // Declare originalPost
 
 export default {
     setup() {
@@ -83,6 +94,7 @@ export default {
                 formData.append('title', post.value.title);
                 formData.append('body', post.value.body);
                 formData.append('condition', post.value.condition);
+                formData.append('location', post.value.location);
 
                 // If the user selected a new image, add it to the form data
                 if (image.value instanceof File || image.value instanceof Blob) {
