@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 // PostController
 Route::get('/api/post/get/{id}', [PostController::class, 'show']);
 Route::get('/api/post/user/get/{id}', [PostController::class, 'getPostsByUserId']);
-Route::get('/api/post/getall', [PostController::class, 'getPosts']);
+Route::get('/api/post/getall', [PostController::class, 'getAll']);
 Route::post('/api/post/store', [PostController::class, 'store']);
 Route::put('/api/post/update/{id}', [PostController::class, 'update']);
 Route::delete('/api/post/delete/{id}', [PostController::class, 'destroy']);
