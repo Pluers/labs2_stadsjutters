@@ -42,10 +42,25 @@ main {
     margin: $nav-height 0;
     width: $main-width;
 }
+
+input,
+textarea,
+select {
+    display: flex;
+    font-size: 16px;
+    padding: 1rem;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+    background-color: $secondary;
+    color: $primary;
+    border: $primary 3px solid;
+}
 button {
     display: flex;
     height: 3rem;
     font-size: 18px;
+    padding: 0 1rem;
     border: none;
     border-radius: 12px;
     align-items: center;
@@ -81,6 +96,15 @@ button {
             background-color: darken($danger, 10%);
         }
     }
+}
+p {
+}
+small {
+    font-size: 0.8em;
+    color: $secondary;
+}
+b {
+    color: $primary;
 }
 nav {
     height: $nav-height;
@@ -145,22 +169,26 @@ nav {
             display: grid;
             grid-template-columns: 1fr auto;
             width: 100%;
+            background-color: $secondary;
+            border-radius: $border-radius;
             .searchBar {
                 padding: 0.5rem 1rem;
                 border: none;
-                border-radius: $border-radius;
+                border-radius: $border-radius 0 0 $border-radius;
                 font-size: 16px;
                 color: $primary;
                 background-color: $secondary;
             }
-            & a {
+            & div {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 text-decoration: none;
                 padding: 0.8rem;
+                background: $secondary;
+                border-radius: 0 $border-radius $border-radius 0;
                 span {
-                    color: $secondary;
+                    color: $primary;
                 }
             }
         }
@@ -184,6 +212,10 @@ nav {
     #categories {
         width: calc($main-width - $page-margin * 2);
         .category {
+            h2 {
+                color: $primary;
+                font-weight: bold;
+            }
             margin-bottom: 1rem;
         }
 
@@ -235,18 +267,27 @@ nav {
                 margin: 0;
             }
         }
-        .post-icons {
-            font-size: 18px;
-        }
 
         button {
             width: 100%;
         }
     }
 }
+span.post-icons {
+    font-size: 18px !important;
+}
+.userLink {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
 #profile,
+#edit-profile,
 #settings,
 #notifications,
+#post,
+#edit_post,
+#create_post,
 #notFound {
     & * {
         text-decoration: none;
@@ -262,6 +303,14 @@ nav {
     width: $main-width;
     margin: $page-margin;
     gap: 1rem;
+    img.profile_picture {
+        border-radius: 50%;
+        border: 5px $primary solid;
+        width: 75%;
+    }
+    h2 {
+        margin: 1rem;
+    }
     section {
         display: flex;
         flex-direction: column;
@@ -271,7 +320,7 @@ nav {
         }
     }
     button {
-        padding: 0 1rem;
+        margin: 0.5rem;
     }
     .user-posts {
         display: flex;
@@ -291,9 +340,90 @@ nav {
         }
     }
 }
+#edit-profile {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        button {
+            margin: 1rem;
+            align-self: center;
+            width: 100%;
+        }
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            img {
+                width: 100%;
+                border-radius: $border-radius;
+                border: 5px $primary solid;
+            }
+
+            input,
+            textarea,
+            select {
+                margin: 0.5rem;
+                align-self: center;
+                width: 100%;
+            }
+        }
+    }
+}
+#create_post,
+#edit_post {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button {
+            margin: 1rem;
+            align-self: center;
+            width: 100%;
+        }
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            img {
+                width: 100%;
+                border-radius: $border-radius;
+                border: 5px $primary solid;
+            }
+
+            input,
+            textarea,
+            select {
+                margin: 0.5rem;
+                align-self: center;
+                width: 100%;
+            }
+        }
+    }
+}
+
 #post {
+    display: flex;
+    flex-direction: column;
     img {
-        width: 50vw;
+        width: 100%;
+    }
+    hr {
+        width: 100%;
+    }
+    p {
+        margin: 3px;
     }
 }
 #settings {
@@ -334,6 +464,9 @@ nav {
     }
 }
 #map {
+    & * {
+        text-decoration: none;
+    }
     user-select: none;
     height: 100vh;
     width: 100vw;
@@ -343,12 +476,22 @@ nav {
     align-items: center;
     outline-style: none;
     z-index: 0;
-    .popup-image {
-        width: 6rem;
-        height: 6rem;
-        border-radius: 12px;
-        object-fit: cover;
-        margin-right: 1rem;
+    .leaflet-popup-content-wrapper {
+        background-color: $secondary;
+        * {
+            color: $primary;
+        }
+        h2,
+        p {
+            margin: 3px 0;
+        }
+        .popup-image {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
     }
 }
 body a span.material-symbols-rounded {

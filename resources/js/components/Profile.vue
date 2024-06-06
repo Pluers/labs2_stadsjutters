@@ -12,18 +12,15 @@
     </div>
     <div id="profile" v-else>
         <section>
-            <img v-if="user && user.picture" :src="user.picture" alt="Profile Picture">
-            <h2 v-if="user">{{ user.first_name }}</h2>
+            <img v-if="user && user.picture" :src="user.picture" class="profile_picture" alt="Profile Picture">
+            <h2 v-if="user">{{ user.first_name }} {{ user.last_name }}</h2>
             <p v-if="user">{{ user.role }}</p>
-            <p v-if="user">url id: {{ id }}</p>
-            <p v-if="user">posts user id: {{ user.id }}</p>
-            <p v-if="user">current logged in user: {{ currentUser.id }}</p>
             <button class="secondary" v-if="currentUser.id == user.id || id == currentUser.id"
-                v-on:click="this.$router.push('EditProfile')">Edit
+                v-on:click="this.$router.push({ name: 'EditProfile' })">Edit
                 Profile</button>
             <button class="accent"
                 v-if="user && (id === currentUser.id || currentUser.id == user.id) && user.role === 'jutter'"
-                v-on:click="this.$router.push('Admin')">Admin
+                v-on:click="this.$router.push({ name: 'Admin' })">Admin
                 Dashboard</button>
         </section>
         <hr>

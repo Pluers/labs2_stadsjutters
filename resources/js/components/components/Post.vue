@@ -72,7 +72,6 @@ export default {
                     const lng = lngMatch[1];
                     const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1&lat=${lat}&lon=${lng}`);
                     const address = response.data.address;
-                    console.log(address);
                     this.localPost.address = `${address.road}${address.house_number ? ' ' + address.house_number : ''}, ${address.city}`;
                 }
             }

@@ -8,9 +8,9 @@
             <div class="search">
                 <input type="text" placeholder="Zoeken..." class="searchBar" v-model="searchTerm">
                 </input>
-                <a @click="searchPosts">
+                <div>
                     <span class="material-symbols-rounded">search</span>
-                </a>
+                </div>
             </div>
             <div class="filters">
                 <div class="filter">
@@ -40,7 +40,7 @@
         </div>
         <div v-else id="categories">
             <div class="category">
-                <h3>New Posts</h3>
+                <h2>New Posts</h2>
                 <div class="new-posts">
                     <div class="loading" v-if="newPosts === null">
                         Loading...
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="category">
-                <h3>Nearby</h3>
+                <h2>Nearby</h2>
                 <div class="nearby-posts">
                     <div class="loading" v-if="nearbyPosts === null">
                         Loading...

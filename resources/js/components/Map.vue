@@ -25,6 +25,7 @@ export default {
                     id: post.id,
                     title: post.title,
                     image: post.image,
+                    user_id: post.user_id,
                     user_first_name: post.user.first_name,
                     user_last_name: post.user.last_name,
                     user_email: post.user.email,
@@ -47,13 +48,33 @@ export default {
         addMarkers() {
             this.posts.forEach(post => {
                 const marker = L.marker([post.lat, post.lng]).addTo(this.map);
-                marker.bindPopup(`
+                marker.bindPopup("Fetching post information...");
+                this.markers.push(marker);
+
+                marker.on('click', async () => {
+                    const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1&lat=${parseFloat(post.lat).toFixed(3)}&lon=${parseFloat(post.lng).toFixed(3)}`);
+                    const address = response.data.address;
+                    console.log(address);
+                    marker.setPopupContent(`
                 <a href="/post/${post.id}">
                     <img class="post-image popup-image" src="${post.image}" alt="" />
                     <h2>${post.title}</h2>
-                    <p>${post.user_first_name} ${post.user_last_name}</p>
+                    <a class="userLink" href="/profile/${post.user_id}">
+                        <span class="material-symbols-rounded post-icons">
+                            person
+                        </span>
+                        <p>
+                            ${post.user_first_name} ${post.user_last_name}
+                        </p>
+                    </a>
+                    <p>
+                        <span class="material-symbols-rounded post-icons">
+                            location_on
+                        </span>
+                    ${address.road}${address.house_number ? ' ' + address.house_number : ''}, ${address.suburb ? address.suburb : address.city}
+                    </p>
                 </a>`);
-                this.markers.push(marker);
+                });
             });
         },
     },

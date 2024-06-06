@@ -2,36 +2,41 @@
     <div v-if="post === 'loading'">
         <h1>Loading...</h1>
     </div>
-    <div v-else-if="post" id="post">
+    <div v-else-if="post" id="edit_post">
         <h1>Edit Post</h1>
         <form @submit.prevent="submitForm">
-            <img v-if="imageSrc" :src="imageSrc" width="50vw" alt="Selected image">
-            <input id="image" type="file" accept="image/*" capture="environment" hidden @change="onImageChange">
-            <button type="button" class="primary">
-                <label for="image">Choose Image</label>
-            </button>
+            <div>
+                <img v-if="post.image || imageSrc" :src="imageSrc ? imageSrc : post.image" alt="Selected image">
+                <input id="image" type="file" accept="image/*" capture="environment" hidden @change="onImageChange">
+                <button type="button" class="accent">
+                    <label for="image">Choose Image</label>
+                </button>
+            </div>
 
-            <label for="title">Title:</label>
-            <input id="title" v-model="post.title">
-
-            <label for="body">Body:</label>
-            <textarea id="body" v-model="post.body"></textarea>
-
+            <div>
+                <input id="title" placeholder="Title" type="text" v-model="post.title" required>
+            </div>
+            <div>
+                <textarea id="body" placeholder="Body" type="text" v-model="post.body" required></textarea>
+            </div>
             <div>
                 <label for="condition">Condition:</label>
                 <select id="condition" v-model="post.condition" required>
-                    <option disabled value="">Please select one</option>
+                    <option value="" disabled selected>Condition</option>
                     <option>New</option>
                     <option>Used</option>
                 </select>
             </div>
             <div>
+                <input id="dimensions" placeholder="Dimensions" type="text" v-model="post.dimensions" required>
+            </div>
+            <div>
                 <label for="location">Location:</label>
                 <input id="location" type="text" v-model="post.location" :hidden="post.location" required>
                 <p>{{ post.location }}</p>
-                <button type="button" @click="getLocation">Get Location</button>
+                <button class="secondary" type="button" @click="getLocation">Get Location</button>
             </div>
-            <button type="submit">Edit post</button>
+            <button class="primary" type="submit">Edit post</button>
         </form>
     </div>
     <div v-else>
@@ -94,6 +99,7 @@ export default {
                 formData.append('title', post.value.title);
                 formData.append('body', post.value.body);
                 formData.append('condition', post.value.condition);
+                formData.append('dimensions', post.value.dimensions);
                 formData.append('location', post.value.location);
 
                 // If the user selected a new image, add it to the form data

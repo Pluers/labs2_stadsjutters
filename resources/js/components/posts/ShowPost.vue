@@ -11,17 +11,31 @@
         <h1>Loading...</h1>
     </div>
     <div v-else-if="post" id="post">
-        <h1>{{ post.title }}</h1>
-        <p>{{ post.body }}</p>
-        <p>{{ post.condition }}</p>
-        <router-link :to="{ name: 'UserProfile', params: { userid: post.user.id } }">
-            {{ post.user.first_name }} {{ post.user.last_name }}
-        </router-link>
         <img :src="post.image" alt="image">
-        <button v-if="user && post.user_id === user.id" @click="editPost">Edit Post</button>
-    </div>
-    <div v-else>
-        <h1>Post not found</h1>
+        <h1>{{ post.title }}</h1>
+        <button class="primary" v-if="user && post.user_id === user.id" @click="editPost">Edit Post</button>
+        <hr>
+        <h2>Information</h2>
+        <router-link class="userLink" :to="{ name: 'UserProfile', params: { userid: post.user.id } }">
+            <span class="material-symbols-rounded post-icons">
+                person
+            </span>
+            <p>
+                {{ post.user.first_name }} {{ post.user.last_name }}
+            </p>
+        </router-link>
+        <p>Description: {{ post.body }}</p>
+        <p>Condition: {{ post.condition }}</p>
+        <p>Dimensions: {{ post.dimensions }}</p>
+        <p>Available Until: {{ post.available_until ? post.available_until : "No end date" }}</p>
+        <h2>Location</h2>
+        <p>Coordinates: <br>{{ post.location }}</p>
+        <p>Address: <br>{{ post.address.road }} {{ post.address.house_number ? post.address.house_number : '' }}
+            {{ post.address.postcode }},
+            {{ post.address.suburb ? post.address.suburb : city }}, {{ post.address.state }}
+        </p>
+
+
     </div>
 </template>
 
@@ -56,6 +70,17 @@ export default {
                     if (userResponse.status === 200) {
                         postData.user = userResponse.data;
                     }
+                    // Parse the location string to extract the latitude and longitude
+                    const location = postData.location.split(', ');
+                    const lat = parseFloat(location[0].split(': ')[1]).toFixed(3);
+                    const lng = parseFloat(location[1].split(': ')[1]).toFixed(3);
+                    // Make a request to the Nominatim API
+                    const nominatimResponse = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1&lat=${lat}&lon=${lng}`);
+                    if (nominatimResponse.status === 200) {
+                        // Store the address data in the post object
+                        postData.address = nominatimResponse.data.address;
+                        console.log(postData.address);
+                    }
                     if (postData) {
                         post.value = postData; // now correctly refers to the ref
                         document.title = postData.title;
@@ -68,6 +93,7 @@ export default {
                 post.value = 'notFound';
             }
         };
+
         const editPost = () => {
             // Redirect to the edit post page
             router.push(`/post/edit/${post.value.id}`);

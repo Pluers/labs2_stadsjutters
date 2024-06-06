@@ -1,25 +1,23 @@
 <template>
-    <div>
+    <div id="edit-profile">
         <h1>Edit User</h1>
         <form @submit.prevent="updateUser">
             <div>
-                <img v-if="imageSrc" :src="imageSrc" width="50vw" alt="Selected image">
+                <img v-if="user.picture || imageSrc" :src="imageSrc ? imageSrc : user.picture" width="50vw"
+                    alt="Selected image">
                 <input id="image" type="file" accept="image/*" capture="environment" hidden @change="onImageChange">
-                <button type="button" class="primary">
+                <button type="button" class="accent">
                     <label for="image">Choose Image</label>
                 </button>
             </div>
             <div>
-                <label for="first_name">First name:</label>
-                <input id="first_name" v-model="user.first_name" type="text" required>
+                <input id="first_name" placeholder="First Name" v-model="user.first_name" type="text" required>
             </div>
             <div>
-                <label for="last_name">Last name:</label>
-                <input id="last_name" v-model="user.last_name" type="text" required>
+                <input id="last_name" placeholder="Last Name" v-model="user.last_name" type="text" required>
             </div>
             <div>
-                <label for="email">Email:</label>
-                <input id="email" v-model="user.email" type="email" required>
+                <input id="email" placeholder="Email" v-model="user.email" type="email" required>
             </div>
             <button class="primary" type="submit">Update</button>
         </form>
@@ -86,7 +84,7 @@ export default {
                 if (response.ok) {
                     const data = await response.json();
                     console.log(data);
-                    router.push(`profile`);
+                    router.push({ name: 'Profile' });
                 } else {
                     const errorData = await response.text(); // Get the response body as text
                     console.error('Server responded with an error:', errorData);

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Models\Notification;
 use App\Notifications\NewPost;
 use Illuminate\Support\Str;
 
@@ -49,6 +48,7 @@ class PostController extends Controller
             $post->body = $request->body;
             $post->condition = $request->condition;
             $post->location = $request->location;
+            $post->dimensions = $request->dimensions;
             $post->tags = $request->tags ?? null; // Assign tags if provided, otherwise set to null
             $post->user_id = auth()->id(); // Get the ID of the currently authenticated user
 
@@ -76,6 +76,7 @@ class PostController extends Controller
                     'body' => ($request->title . "  " . $request->body),
                     'image' => $post->image,
                     'condition' => $post->condition,
+                    'dimensions' => $post->dimensions,
                     'location' => $request->input('address'),
                 ]);
             }
@@ -113,6 +114,7 @@ class PostController extends Controller
             $post->title = $request->title;
             $post->body = $request->body;
             $post->condition = $request->condition;
+            $post->dimensions = $request->dimensions;
             $post->location = $request->location;
             $post->tags = $request->tags ?? $post->tags; // Update tags if provided, otherwise keep the old ones
 
