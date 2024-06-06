@@ -97,14 +97,16 @@ button {
         }
     }
 }
-p {
-}
 small {
     font-size: 0.8em;
     color: $secondary;
 }
 b {
     color: $primary;
+}
+hr {
+    border-color: $primary;
+    opacity: 0.75;
 }
 nav {
     height: $nav-height;
@@ -309,7 +311,10 @@ span.post-icons {
         width: 75%;
     }
     h2 {
-        margin: 1rem;
+        margin-top: 1rem;
+    }
+    h5 {
+        color: $primary;
     }
     section {
         display: flex;

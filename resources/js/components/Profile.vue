@@ -14,7 +14,7 @@
         <section>
             <img v-if="user && user.picture" :src="user.picture" class="profile_picture" alt="Profile Picture">
             <h2 v-if="user">{{ user.first_name }} {{ user.last_name }}</h2>
-            <p v-if="user">{{ user.role }}</p>
+            <h5 v-if="user">{{ user.role }}</h5>
             <button class="secondary" v-if="currentUser.id == user.id || id == currentUser.id"
                 v-on:click="this.$router.push({ name: 'EditProfile' })">Edit
                 Profile</button>
