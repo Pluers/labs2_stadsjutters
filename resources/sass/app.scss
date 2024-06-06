@@ -260,6 +260,7 @@ nav {
         flex-direction: column;
         .post {
             display: flex;
+            width: 100%;
             flex-direction: column;
             background: $secondary;
             border-radius: $border-radius;
