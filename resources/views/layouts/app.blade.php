@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#8b5a5f">
+    <link rel=”apple-touch-icon” href=”{{ asset('favicon.png') }}”>
     <link rel="manifest" href="/manifest.json">
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
     <link rel="stylesheet"
@@ -21,13 +22,19 @@
 
     {{-- For the map import --}}
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    {{-- Service Worker --}}
+    <script src="{{ asset('/sw.js') }}"></script>
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js');
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/sw.js").then(function(reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
             });
         }
     </script>
+
+    {{-- PWA --}}
+    @laravelPWA
 </head>
 
 <body>

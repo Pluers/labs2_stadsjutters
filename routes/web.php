@@ -7,6 +7,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\NotificationsController;
 use Illuminate\Support\Facades\Auth;
 
+Route::get('/offline', function () {
+    return view('modules/laravelpwa/offline');
+});
+
 // PostController
 Route::get('/api/post/get/{id}', [PostController::class, 'show']);
 Route::get('/api/post/user/get/{id}', [PostController::class, 'getPostsByUserId']);
