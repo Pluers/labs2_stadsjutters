@@ -6,12 +6,28 @@
 import { createApp } from 'vue';
 import router from './router';
 import Navbar from './components/Navbar.vue';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
  * to use in your application's views. An example is included for you.
  */
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyCRETlkGnhUXiUuSnl6Yp-GIJ5hLpwwd-k",
+    authDomain: "stadsjutters.firebaseapp.com",
+    projectId: "stadsjutters",
+    storageBucket: "stadsjutters.appspot.com",
+    messagingSenderId: "172966720644",
+    appId: "1:172966720644:web:4027f22898b043cf127ed1",
+    measurementId: "G-BY7V4PPX24"
+};
 
 const app = createApp({});
 
@@ -34,8 +50,16 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
  * an "id" attribute of "app". This element is included with the "auth"
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+const analytics = getAnalytics(firebaseApp);
 
 if (document.querySelector('header')) {
     navbarApp.use(router).mount('nav');
 }
 app.use(router).mount('main');
+
+
+
+
+
