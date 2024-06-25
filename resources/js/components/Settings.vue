@@ -3,15 +3,18 @@
         <section>
             <h2>Account</h2>
             <p>Delete account</p>
-            <button class="secondary" v-on:click="logout">Logout</button><!--Should be moved to settings later-->
+            <button class="secondary" v-on:click="logout">Logout</button>
         </section>
         <hr>
+        <section>
+            <h2>About</h2>
+            <p><small>Version 0.9 alpha</small></p>
+        </section>
     </div>
 
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 export default {

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Register')
 @section('content')
+    <header class="auth-header">
+        @include('components.auth-header');
+    </header>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">

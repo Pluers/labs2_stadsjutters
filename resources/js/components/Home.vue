@@ -8,9 +8,9 @@
             <div class="search">
                 <input type="text" placeholder="Zoeken..." class="searchBar" v-model="searchTerm">
                 </input>
-                <a @click="searchPosts">
+                <div>
                     <span class="material-symbols-rounded">search</span>
-                </a>
+                </div>
             </div>
             <div class="filters">
                 <div class="filter">
@@ -29,74 +29,33 @@
         </div>
         <div v-if="searchTerm != ''" id="searchResults">
             <div class="category">
-                <h3>Search Results</h3>
+                <h2>Search Results</h2>
                 <div class="search-posts">
                     <div class="loading" v-if="posts === null">
                         Loading...
                     </div>
-                    <router-link v-for="post in (posts ? posts : [])" :key="post.id"
-                        :to="{ name: 'Post', params: { postid: post.id } }" class="post search_result">
-                        <img class="post-image" :src="post.image" alt="" />
-                        <div class="post-content">
-                            <div class="post-header">
-                                <h1 class="post-title">{{ post.title }}</h1>
-                                <p class="post-title">{{ post.tags }}</p>
-                            </div>
-                            <div class="post-body">
-                                {{ post.body }}
-                                {{ post.user ? `${post.user.first_name} ${post.user.last_name}` : 'User not found' }}
-                                {{ new Date(post.created_at).toLocaleDateString() }}
-                            </div>
-                        </div>
-                    </router-link>
+                    <Post v-for="post in (posts ? posts : [])" :key="post.id" :post="post" class="search_result" />
                 </div>
             </div>
         </div>
         <div v-else id="categories">
             <div class="category">
-                <h3>New Posts</h3>
+                <h2>New Posts</h2>
                 <div class="new-posts">
                     <div class="loading" v-if="newPosts === null">
                         Loading...
                     </div>
-                    <router-link v-for="post in (newPosts ? newPosts.slice(0, 5) : [])" :key="post.id"
-                        :to="{ name: 'Post', params: { postid: post.id } }" class="post">
-                        <img class="post-image" :src="post.image" alt="" />
-                        <div class="post-content">
-                            <div class="post-header">
-                                <h1 class="post-title">{{ post.title }}</h1>
-                                <p class="post-title">{{ post.tags }}</p>
-                            </div>
-                            <div class="post-body">
-                                {{ post.body }}
-                                {{ post.user ? `${post.user.first_name} ${post.user.last_name}` : 'User not found' }}
-                                {{ new Date(post.created_at).toLocaleDateString() }}
-                            </div>
-                        </div>
-                    </router-link>
+                    <Post v-else v-for="post in (newPosts ? newPosts.slice(0, 5) : [])" :key="post.id" :post="post" />
                 </div>
             </div>
             <div class="category">
-                <h3>Nearby</h3>
+                <h2>Nearby</h2>
                 <div class="nearby-posts">
                     <div class="loading" v-if="nearbyPosts === null">
                         Loading...
                     </div>
-                    <router-link v-for="post in (nearbyPosts ? nearbyPosts.slice(0, 5) : [])" :key="post.id"
-                        :to="{ name: 'Post', params: { postid: post.id } }" class="post">
-                        <img class="post-image" :src="post.image" alt="" />
-                        <div class="post-content">
-                            <div class="post-header">
-                                <h1 class="post-title">{{ post.title }}</h1>
-                                <p class="post-title">{{ post.tags }}</p>
-                            </div>
-                            <div class="post-body">
-                                {{ post.body }}
-                                {{ post.user ? `${post.user.first_name} ${post.user.last_name}` : 'User not found' }}
-                                {{ new Date(post.created_at).toLocaleDateString() }}
-                            </div>
-                        </div>
-                    </router-link>
+                    <Post v-else v-for="post in (nearbyPosts ? nearbyPosts.slice(0, 5) : [])" :key="post.id"
+                        :post="post" />
                 </div>
             </div>
         </div>
@@ -104,10 +63,14 @@
 </template>
 
 <script>
+import Post from './components/Post.vue';
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 
 export default {
+    components: {
+        Post
+    },
     setup() {
         const newPosts = ref(null);
         const nearbyPosts = ref(null);

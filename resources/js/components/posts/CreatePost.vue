@@ -1,35 +1,36 @@
 <template>
-    <div>
+    <div id="create_post">
         <h1>Create Post</h1>
         <form @submit.prevent="createPost">
             <div>
-                <img v-if="imageSrc" :src="imageSrc" width="50vw" alt="Selected image">
+                <img v-if="imageSrc" :src="imageSrc" class="selected_image" alt="Selected image">
                 <input id="image" type="file" accept="image/*" capture="environment" hidden @change="onImageChange">
-                <button type="button" class="primary">
+                <button type="button" class="accent">
                     <label for="image">Choose Image</label>
                 </button>
             </div>
             <div>
-                <label for="title">Title:</label>
-                <input id="title" type="text" v-model="post.title" required>
+                <input id="title" placeholder="Title" type="text" v-model="post.title" required>
             </div>
             <div>
-                <label for="body">Body:</label>
-                <input id="body" type="text" v-model="post.body" required>
+                <textarea id="body" placeholder="Body" type="text" v-model="post.body" required></textarea>
             </div>
             <div>
                 <label for="condition">Condition:</label>
                 <select id="condition" v-model="post.condition" required>
-                    <option disabled value="">Please select one</option>
+                    <option value="" disabled selected>Condition</option>
                     <option>New</option>
                     <option>Used</option>
                 </select>
             </div>
             <div>
+                <input id="dimensions" placeholder="Dimensions" type="text" v-model="post.dimensions" required>
+            </div>
+            <div>
                 <label for="location">Location:</label>
                 <input id="location" type="text" v-model="post.location" :hidden="post.location" required>
-                <p>{{ post.location }}</p>
-                <button type="button" @click="getLocation">Get Location</button>
+                <b>{{ post.address }}</b>
+                <button type="button" class="secondary" @click="getLocation">Get Location</button>
             </div>
             <button class="primary" type="submit">Create</button>
         </form>
@@ -48,6 +49,7 @@ export default {
             body: '',
             tags: '',
             condition: '',
+            dimensions: '',
             location: '',
         });
         const router = useRouter();
@@ -70,7 +72,9 @@ export default {
             formData.append('title', post.value.title);
             formData.append('body', post.value.body);
             formData.append('condition', post.value.condition);
+            formData.append('dimensions', post.value.dimensions);
             formData.append('location', post.value.location);
+            formData.append('address', post.value.address);
 
             for (var pair of formData.entries()) {
                 console.log(pair[0] + ', ' + pair[1]);
@@ -106,10 +110,14 @@ export default {
         };
     },
     methods: {
-        getLocation: function () {
+        async getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`);
+                    const data = await response.json();
+                    const address = data.address;
                     this.post.location = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+                    this.post.address = `${address.road}${address.house_number ? ' ' + address.house_number : ''}   ${address.postcode}, ${address.suburb ? address.suburb : address.city}, ${address.state}`;
                 });
             } else {
                 alert("Geolocation is not supported by this browser.");
@@ -118,7 +126,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-/* Your CSS here */
-</style>
